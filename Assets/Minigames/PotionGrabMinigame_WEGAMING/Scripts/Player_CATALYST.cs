@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <see cref="https://github.com/SebLague/2DPlatformer-Tutorial"/> 
 /// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
-public class Player_WEGAMING : MonoBehaviour
+public class Player_CATALYST : MonoBehaviour
 {
     public float jumpHeight = 4;
     public float timeToJumpApex = 0.4f;
@@ -20,11 +20,11 @@ public class Player_WEGAMING : MonoBehaviour
     Vector2 velocity;
     Vector2 moveDirection;
 
-    MovementController_WEGAMING controller;
+    MovementController_CATALYST controller;
 
     void Start()
     {
-        controller = GetComponent<MovementController_WEGAMING>();
+        controller = GetComponent<MovementController_CATALYST>();
 
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;

@@ -13,7 +13,7 @@ using UnityEngine.UI;
 /// will be stretched.
 /// </summary>
 [ExecuteAlways]
-public class AutoLetterboxCameraOrthographicSizeFitter : MonoBehaviour
+public class LetterboxCameraFOV_CATALYST : MonoBehaviour
 {
   public AspectRatioFitter Fitter = null;
   public Camera TargetCamera = null;

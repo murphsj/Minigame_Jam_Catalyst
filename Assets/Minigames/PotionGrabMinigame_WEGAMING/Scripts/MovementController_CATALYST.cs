@@ -8,7 +8,7 @@ using Vector2 = UnityEngine.Vector2;
 /// <see cref="https://github.com/SebLague/2DPlatformer-Tutorial"/> 
 /// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
-public class MovementController_WEGAMING : MonoBehaviour
+public class MovementController_CATALYST : MonoBehaviour
 {
     struct RaycastOrigins
     {
