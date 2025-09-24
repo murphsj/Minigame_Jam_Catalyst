@@ -457,7 +457,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 24.009888
+  orthographic size: 29.725475
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -692,7 +692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AutoLetterboxCameraOrthographicSizeFitter
   Fitter: {fileID: 229232163}
   TargetCamera: {fileID: 519420031}
-  ReferenceVerticalOrthographicSize: 4
+  ReferenceVerticalOrthographicSize: 6
 --- !u!1 &906188240
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,7 +904,7 @@ Transform:
   m_GameObject: {fileID: 906188240}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.41258, y: 1.58019, z: 0}
+  m_LocalPosition: {x: 9, y: 1.5, z: 0}
   m_LocalScale: {x: 1.275979, y: 9.292969, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1121,7 +1121,7 @@ Transform:
   m_GameObject: {fileID: 1053499029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.29742, y: 1.58019, z: 0}
+  m_LocalPosition: {x: -12, y: 1.5, z: 0}
   m_LocalScale: {x: 1.275979, y: 9.292969, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1414,7 +1414,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.42742, y: -3.52981, z: 0}
-  m_LocalScale: {x: 17.01328, y: 1, z: 1}
+  m_LocalScale: {x: 22.329931, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1731546335}
@@ -1753,7 +1753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player_WEGAMING
   jumpHeight: 4
   timeToJumpApex: 0.4
-  moveSpeedGround: 6
+  moveSpeedGround: 4
   moveSpeedAir: 0
 --- !u!114 &1469911818
 MonoBehaviour:
