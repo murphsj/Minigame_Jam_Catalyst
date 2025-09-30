@@ -11,7 +11,7 @@ public enum DropletType
 
 public static class Extensions
 {
-    public static string getSpriteName(this DropletType dropletType)
+    public static string getStateName(this DropletType dropletType)
     {
         return "droplet_" + (int)dropletType;
     }

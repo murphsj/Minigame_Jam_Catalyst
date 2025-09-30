@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2673344406946897431}
   - component: {fileID: 4172776986717201667}
   - component: {fileID: 1338616594959679932}
+  - component: {fileID: -7438612363652504754}
   m_Layer: 0
   m_Name: Droplet
   m_TagString: Untagged
@@ -165,3 +166,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Droplet_CATACLYST
   dropletType: 0
   dropletSpriteSheet: {fileID: 0}
+--- !u!95 &-7438612363652504754
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2156431012809322406}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eca33544c899d4ad7aec6644881e5bd8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

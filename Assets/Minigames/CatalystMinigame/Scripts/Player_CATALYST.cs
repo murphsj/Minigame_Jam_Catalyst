@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Handles movement and input handling for the player.
@@ -19,6 +21,8 @@ public class Player_CATALYST : MonoBehaviour
 
     Vector2 velocity;
     Vector2 moveDirection;
+
+    bool flipped;
 
     MovementController_CATALYST controller;
 
@@ -44,6 +48,22 @@ public class Player_CATALYST : MonoBehaviour
     {
         if (!MinigameManager.IsReady()) return;
         moveDirection = inputValue.Get<Vector2>();
+        if (moveDirection.x != 0)
+        {
+            flipped = moveDirection.x > 0;
+        }
+    }
+
+    void UpdateFlipped()
+    {
+        if (flipped)
+        {
+            gameObject.transform.localScale = new Vector2(1, gameObject.transform.localScale.y);
+        }
+        else
+        {
+            gameObject.transform.localScale = new Vector2(-1, gameObject.transform.localScale.y);
+        }
     }
 
     void FixedUpdate()
@@ -52,6 +72,7 @@ public class Player_CATALYST : MonoBehaviour
 
         if (controller.collisions.below || moveSpeedAir > 0)
         {
+            UpdateFlipped();
             velocity.x = moveDirection.x * (controller.collisions.below ? moveSpeedGround : moveSpeedAir);
         }
 

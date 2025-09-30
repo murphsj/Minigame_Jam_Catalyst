@@ -6,11 +6,9 @@ public class DropletSpawningManager_CATALYST : MonoBehaviour
 {
     public Droplet_CATACLYST droplet;
     public BoxCollider2D dropletSpawnPlatform;
-    public float dropletSpawnHeight = 100;
     public float dropletMoveSpeed = 1;
     public float dropletSpawnRate = 1;
-
-    Dictionary<DropletType, Sprite> spriteMap;
+    public float dropletLifetime = 3;
 
     float minSpawnX;
     float maxSpawnX;
@@ -24,31 +22,18 @@ public class DropletSpawningManager_CATALYST : MonoBehaviour
         spawnY = dropletSpawnPlatform.bounds.min.y;
     }
 
-    void LoadDropletSpriteMap()
-    {
-        spriteMap = new Dictionary<DropletType, Sprite>();
-        foreach (DropletType dropletType in Enum.GetValues(typeof(DropletType)))
-        {
-            spriteMap.Add(dropletType, Instantiate(Resources.Load<Sprite>(dropletType.getSpriteName())));
-        }
-
-        Debug.Log(spriteMap[DropletType.Blue]);
-    }
-
     void Start()
     {
         CalculateSpawnRange();
-        LoadDropletSpriteMap();
     }
 
     void SpawnDroplet()
     {
         Vector2 position = new Vector2(UnityEngine.Random.Range(minSpawnX, maxSpawnX), spawnY);
-        DropletType dropletType = (DropletType)UnityEngine.Random.Range(0, 3);
+        DropletType dropletType = (DropletType)UnityEngine.Random.Range(0, 4);
 
         Droplet_CATACLYST spawnedDroplet = Instantiate(droplet, position, Quaternion.identity);
-        spawnedDroplet.GetComponent<SpriteRenderer>().sprite = spriteMap[dropletType];
-        spawnedDroplet.Initialize(dropletType, dropletMoveSpeed);
+        spawnedDroplet.Initialize(dropletType, dropletMoveSpeed, dropletLifetime);
     }
 
     void Update()
