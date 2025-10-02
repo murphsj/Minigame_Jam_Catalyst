@@ -15,6 +15,7 @@ public class Player_CATALYST : MonoBehaviour
     public float timeToJumpApex = 0.4f;
     public float moveSpeedGround = 6;
     public float moveSpeedAir = 0;
+    public BoxCollider2D flaskHitbox;
 
     float gravity;
     float jumpVelocity;
@@ -25,6 +26,7 @@ public class Player_CATALYST : MonoBehaviour
     bool flipped;
 
     MovementController_CATALYST controller;
+
 
     void Start()
     {
@@ -85,5 +87,8 @@ public class Player_CATALYST : MonoBehaviour
         }
     }
 
-
+    void OnCollisionEnter2D()
+    {
+        
+    }
 }
