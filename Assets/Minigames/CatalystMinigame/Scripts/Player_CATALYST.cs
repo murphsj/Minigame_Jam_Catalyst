@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -11,6 +12,15 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Player_CATALYST : MonoBehaviour
 {
+    enum PlayerState
+    {
+        Idle,
+        Walk,
+        Jump,
+        Damaged,
+        Deposit
+    }
+
     [Header("Movement")]
     public float jumpHeight = 4;
     public float timeToJumpApex = 0.4f;
@@ -31,6 +41,8 @@ public class Player_CATALYST : MonoBehaviour
     
     [Header("Visual Feedback")]
     public float flashDuration = 0.1f;
+
+
 
     // Movement variables
     float gravity;
@@ -53,6 +65,13 @@ public class Player_CATALYST : MonoBehaviour
     private float knockbackTimer;
     private SpriteRenderer spriteRenderer;
 
+    PlayerState playerState;
+
+    void SetState(PlayerState state)
+    {
+        playerState = state;
+    }
+
     void Start()
     {
         controller = GetComponent<MovementController_CATALYST>();
@@ -61,6 +80,7 @@ public class Player_CATALYST : MonoBehaviour
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         doubleJumpVelocity = Mathf.Sqrt(2 * doubleJumpHeight * Mathf.Abs(gravity));
+        SetState(PlayerState.Idle);
         
         // Initialize health
         currentHealth = maxHealth;
@@ -91,6 +111,7 @@ public class Player_CATALYST : MonoBehaviour
     void OnInteract(InputValue inputValue)
     {
         if (!MinigameManager.IsReady()) return;
+        if (!CanPlayerAct()) return;
 
         if (inputValue.isPressed)
         {
@@ -100,13 +121,14 @@ public class Player_CATALYST : MonoBehaviour
                 //normal jump when on ground
                 velocity.y = jumpVelocity;
                 hasDoubleJumped = false; //reset double jump when touching ground
+                SetState(PlayerState.Jump);
             }
             else if (allowDoubleJump && !hasDoubleJumped && velocity.y < 0)
             {
                 //start the double jump with immediate upward boost
                 velocity.y = doubleJumpVelocity;
                 hasDoubleJumped = true;
-                
+
                 isHoldingDoubleJump = true;
             }
         }
@@ -131,6 +153,11 @@ public class Player_CATALYST : MonoBehaviour
         }
     }
 
+    bool CanPlayerAct()
+    {
+        return !(playerState == PlayerState.Damaged || playerState == PlayerState.Deposit);
+    }
+
     void UpdateFlipped()
     {
         if (flipped)
@@ -145,9 +172,10 @@ public class Player_CATALYST : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(playerState);
         if (!MinigameManager.IsReady()) return;
 
-        if (controller.collisions.below || moveSpeedAir > 0)
+        if (playerState == PlayerState.Walk || (moveSpeedAir > 0 && playerState == PlayerState.Jump))
         {
             UpdateFlipped();
             velocity.x = moveDirection.x * (controller.collisions.below ? moveSpeedGround : moveSpeedAir);
@@ -159,6 +187,12 @@ public class Player_CATALYST : MonoBehaviour
         if (controller.collisions.above || controller.collisions.below)
         {
             velocity.y = 0;
+        }
+
+        if (controller.collisions.below)
+        {
+            if (playerState == PlayerState.Jump) SetState(PlayerState.Idle);
+            if (CanPlayerAct()) SetState(moveDirection.x != 0 ? PlayerState.Walk : PlayerState.Idle);
         }
         
         UpdateDamageSystem();
@@ -177,16 +211,27 @@ public class Player_CATALYST : MonoBehaviour
                 float flashTime = Mathf.Sin(Time.time * 20f); // Fast flashing
                 spriteRenderer.color = new Color(1f, 1f, 1f, flashTime > 0 ? 1f : 0.5f);
             }
+
+            if (invincibilityTimer < 1)
+            {
+                // allow movement again
+                SetState(PlayerState.Idle);
+            }
+            else
+            {
+                velocity.x /= 1.3f;
+                velocity.y /= 1.3f;
+            }
             
             if (invincibilityTimer <= 0)
-            {
-                isInvincible = false;
-                // Reset sprite color
-                if (spriteRenderer != null)
                 {
-                    spriteRenderer.color = Color.white;
+                    isInvincible = false;
+                    // Reset sprite color
+                    if (spriteRenderer != null)
+                    {
+                        spriteRenderer.color = Color.white;
+                    }
                 }
-            }
         }
         
         // Handle knockback timer
@@ -216,6 +261,7 @@ public class Player_CATALYST : MonoBehaviour
         
         // Apply damage
         currentHealth -= damage;
+        SetState(PlayerState.Damaged);
         Debug.Log($"Player took {damage} damage! Health: {currentHealth}/{maxHealth}");
         
         // Activate invincibility
