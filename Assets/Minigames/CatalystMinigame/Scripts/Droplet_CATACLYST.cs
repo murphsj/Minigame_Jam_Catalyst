@@ -37,6 +37,15 @@ public class Droplet_CATACLYST : MonoBehaviour
         }
         transform.Translate(new Vector2(0, -Time.deltaTime * moveSpeed));
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Player_CATALYST player = other.GetComponentInParent<Player_CATALYST>();
+        if (player != null)
+        {
+            if (player.AddToFlask(dropletType)) Destroy(gameObject);
+        }
+    }
     
     
 }

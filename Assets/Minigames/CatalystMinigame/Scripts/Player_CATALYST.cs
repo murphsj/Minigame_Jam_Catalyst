@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,7 +27,6 @@ public class Player_CATALYST : MonoBehaviour
     public float timeToJumpApex = 0.4f;
     public float moveSpeedGround = 6;
     public float moveSpeedAir = 0;
-    public BoxCollider2D flaskHitbox;
     
     [Header("Double Jump")]
     public bool allowDoubleJump = true;
@@ -73,6 +73,7 @@ public class Player_CATALYST : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     PlayerState playerState;
+    DropletType[] flaskStorage;
 
     void SetState(PlayerState state)
     {
@@ -92,18 +93,8 @@ public class Player_CATALYST : MonoBehaviour
         // Initialize health
         currentHealth = maxHealth;
 
-        Shader.SetGlobalVectorArray(flaskLayerColorId, new Vector4[] {
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-            new Vector4(1, 0, 0, 1),
-        });
+        flaskStorage = new DropletType[10];
+        UpdateFlaskSprite();
     }
 
     void Update()
@@ -192,7 +183,6 @@ public class Player_CATALYST : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(playerState);
         if (!MinigameManager.IsReady()) return;
 
         if (playerState == PlayerState.Walk || (moveSpeedAir > 0 && playerState == PlayerState.Jump))
@@ -312,6 +302,32 @@ public class Player_CATALYST : MonoBehaviour
         Debug.Log("Player died!");
         MinigameManager.SetStateToFailure();
         MinigameManager.EndGame();
+    }
+
+    void UpdateFlaskSprite()
+    {
+        Vector4[] flaskColors = new Vector4[10];
+        for (int i = 0; i < flaskColors.Length; i++)
+        {
+            Debug.Log(flaskStorage[i].getColor());
+            flaskColors[i] = flaskStorage[i].getColor();
+        }
+        
+        Shader.SetGlobalVectorArray(flaskLayerColorId, flaskColors);
+    }
+
+    public bool AddToFlask(DropletType dropletType)
+    {
+        for (int i = 0; i < flaskStorage.Length; i++)
+        {
+            if (flaskStorage[i] == DropletType.None)
+            {
+                flaskStorage[i] = dropletType;
+                UpdateFlaskSprite();
+                return true;
+            }
+        }
+        return false; // flask is full
     }
     
     // Public getters for UI or other systems
