@@ -42,7 +42,14 @@ public class Player_CATALYST : MonoBehaviour
     [Header("Visual Feedback")]
     public float flashDuration = 0.1f;
 
+    // The numeric ID of the global shader property used to control the
+    // visual contents of the flask
+    static readonly int flaskLayerColorId;
 
+    static Player_CATALYST()
+    {
+        flaskLayerColorId = Shader.PropertyToID("_LayerColors");
+    }
 
     // Movement variables
     float gravity;
@@ -81,9 +88,22 @@ public class Player_CATALYST : MonoBehaviour
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         doubleJumpVelocity = Mathf.Sqrt(2 * doubleJumpHeight * Mathf.Abs(gravity));
         SetState(PlayerState.Idle);
-        
+
         // Initialize health
         currentHealth = maxHealth;
+
+        Shader.SetGlobalVectorArray(flaskLayerColorId, new Vector4[] {
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+            new Vector4(1, 0, 0, 1),
+        });
     }
 
     void Update()
@@ -191,7 +211,11 @@ public class Player_CATALYST : MonoBehaviour
 
         if (controller.collisions.below)
         {
-            if (playerState == PlayerState.Jump) SetState(PlayerState.Idle);
+            if (playerState == PlayerState.Jump)
+            {
+                SetState(PlayerState.Idle);
+                velocity.x = 0;
+            }
             if (CanPlayerAct()) SetState(moveDirection.x != 0 ? PlayerState.Walk : PlayerState.Idle);
         }
         
