@@ -17,6 +17,11 @@ public class Player_CATALYST : MonoBehaviour
     public float moveSpeedGround = 6;
     public float moveSpeedAir = 0;
     
+    [Header("Double Jump")]
+    public bool allowDoubleJump = true;
+    public float doubleJumpHeight = 3;
+    public float doubleJumpForwardForce = 8f;
+    
     [Header("Health System")]
     public int maxHealth = 9;
     public float invincibilityDuration = 1.5f;
@@ -28,9 +33,11 @@ public class Player_CATALYST : MonoBehaviour
     // Movement variables
     float gravity;
     float jumpVelocity;
+    float doubleJumpVelocity;
     Vector2 velocity;
     Vector2 moveDirection;
     bool flipped;
+    bool hasDoubleJumped = false;
     MovementController_CATALYST controller;
     
     // Health and damage variables
@@ -49,18 +56,36 @@ public class Player_CATALYST : MonoBehaviour
 
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        doubleJumpVelocity = Mathf.Sqrt(2 * doubleJumpHeight * Mathf.Abs(gravity));
         
         // Initialize health
         currentHealth = maxHealth;
     }
 
+    //double jump logic:
     void OnInteract(InputValue inputValue)
     {
         if (!MinigameManager.IsReady()) return;
 
         if (controller.collisions.below)
         {
+            //normal jump when on ground
             velocity.y = jumpVelocity;
+            hasDoubleJumped = false; //rest double jump when touching ground
+        }
+        else if (allowDoubleJump && !hasDoubleJumped && velocity.y < 0)
+        {
+            velocity.y = doubleJumpVelocity;
+            
+            //add forward momentum based on movement direction
+            if (moveDirection.x > 0)
+                velocity.x = doubleJumpForwardForce; //leap right
+            else if (moveDirection.x < 0)
+                velocity.x = -doubleJumpForwardForce; //leap left
+            else
+                velocity.x = doubleJumpForwardForce; //default leap right if not moving
+            
+            hasDoubleJumped = true;
         }
     }
 
@@ -104,7 +129,6 @@ public class Player_CATALYST : MonoBehaviour
             velocity.y = 0;
         }
         
-        // Update damage system timers
         UpdateDamageSystem();
     }
     
@@ -147,7 +171,7 @@ public class Player_CATALYST : MonoBehaviour
     }
     
     /// <summary>
-    /// Damages the player with knockback and mercy invincibility
+    /// Damages the player with knockback and give player some mercy with invincibility
     /// </summary>
     /// <param name="damage">Amount of damage to deal</param>
     /// <param name="knockbackForce">Force of the knockback</param>
@@ -174,7 +198,7 @@ public class Player_CATALYST : MonoBehaviour
         // Override current velocity with knockback
         velocity = knockbackVelocity;
         
-        // Check for game over
+
         if (currentHealth <= 0)
         {
             Die();
@@ -184,7 +208,6 @@ public class Player_CATALYST : MonoBehaviour
     void Die()
     {
         Debug.Log("Player died!");
-        // Set game state to failure
         MinigameManager.SetStateToFailure();
         MinigameManager.EndGame();
     }
