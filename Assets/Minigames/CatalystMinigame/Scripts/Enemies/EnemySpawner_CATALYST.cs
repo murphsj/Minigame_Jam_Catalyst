@@ -58,12 +58,12 @@ public class EnemySpawner_CATALYST : MonoBehaviour
             return;
         }
 
-        Vector3 spawnPosition = new Vector3(0f, 0f, 0f);
+        Vector3 spawnPosition = new Vector3(0f, -1.5f, 0f);
         
         // Spawn enemy from prefab
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         enemy.name = "Enemy_" + enemiesSpawned;
-        enemy.transform.localScale = new Vector3(0.2f, 0.2f, 1f);
+        enemy.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         
         BoxCollider2D bc = enemy.GetComponent<BoxCollider2D>();
         if (bc != null)
