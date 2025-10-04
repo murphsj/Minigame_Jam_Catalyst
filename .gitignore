@@ -97,3 +97,13 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+
+# Don't commit the default scene and its meta
+Assets/scene1.unity
+Assets/scene1.unity.meta
+
+# Unity generated folders
+Library/
+Temp/
+UserSettings/
