@@ -20,7 +20,8 @@ public class Player_CATALYST : MonoBehaviour
     [Header("Double Jump")]
     public bool allowDoubleJump = true;
     public float doubleJumpHeight = 3;
-    public float doubleJumpForwardForce = 8f;
+    public float maxForwardForce = 8f;
+    public float forwardForcePerSecond = 8f;
     
     [Header("Health System")]
     public int maxHealth = 9;
@@ -38,6 +39,8 @@ public class Player_CATALYST : MonoBehaviour
     Vector2 moveDirection;
     bool flipped;
     bool hasDoubleJumped = false;
+    bool isHoldingDoubleJump = false;
+    float doubleJumpHoldTime = 0f;
     MovementController_CATALYST controller;
     
     // Health and damage variables
@@ -62,32 +65,60 @@ public class Player_CATALYST : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    //double jump logic:
+    void Update()
+    {
+        // Handle double jump with forward force (leap)
+        if (isHoldingDoubleJump)
+        {
+            // Only add forward force if player is actually moving (left or right)
+            if (moveDirection.x != 0)
+            {
+                //gradually add forward velocity while holding
+                float forwardDirection = moveDirection.x > 0 ? 1f : -1f;
+                
+                //add forward force gradually, but cap at maxForwardForce
+                float currentForwardVelocity = Mathf.Abs(velocity.x);
+                if (currentForwardVelocity < maxForwardForce)
+                {
+                    float additionalForce = forwardForcePerSecond * Time.deltaTime;
+                    velocity.x += additionalForce * forwardDirection;
+                }
+            }
+        }
+    }
+
     void OnInteract(InputValue inputValue)
     {
         if (!MinigameManager.IsReady()) return;
 
-        if (controller.collisions.below)
+        if (inputValue.isPressed)
         {
-            //normal jump when on ground
-            velocity.y = jumpVelocity;
-            hasDoubleJumped = false; //rest double jump when touching ground
+            // Button pressed down
+            if (controller.collisions.below)
+            {
+                //normal jump when on ground
+                velocity.y = jumpVelocity;
+                hasDoubleJumped = false; //reset double jump when touching ground
+            }
+            else if (allowDoubleJump && !hasDoubleJumped && velocity.y < 0)
+            {
+                //start the double jump with immediate upward boost
+                velocity.y = doubleJumpVelocity;
+                hasDoubleJumped = true;
+                
+                isHoldingDoubleJump = true;
+            }
         }
-        else if (allowDoubleJump && !hasDoubleJumped && velocity.y < 0)
+        else
         {
-            velocity.y = doubleJumpVelocity;
-            
-            //add forward momentum based on movement direction
-            if (moveDirection.x > 0)
-                velocity.x = doubleJumpForwardForce; //leap right
-            else if (moveDirection.x < 0)
-                velocity.x = -doubleJumpForwardForce; //leap left
-            else
-                velocity.x = doubleJumpForwardForce; //default leap right if not moving
-            
-            hasDoubleJumped = true;
+            //if the spacebar is released: stop adding forward force
+            if (isHoldingDoubleJump)
+            {
+                isHoldingDoubleJump = false;
+            }
         }
     }
+    
 
     void OnMove(InputValue inputValue)
     {
