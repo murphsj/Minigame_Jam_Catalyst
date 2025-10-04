@@ -18,7 +18,7 @@ public class Player_CATALYST : MonoBehaviour
     public float moveSpeedAir = 0;
     
     [Header("Health System")]
-    public int maxHealth = 3;
+    public int maxHealth = 9;
     public float invincibilityDuration = 1.5f;
     public float knockbackDuration = 0.3f;
     

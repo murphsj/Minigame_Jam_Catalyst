@@ -13,11 +13,7 @@ public class HealthDisplay_CATALYST : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<Player_CATALYST>();
-        
-        if (healthText == null && healthHearts == null)
-        {
-            CreateSimpleHealthDisplay();
-        }
+        CreateSimpleHealthDisplay();
     }
     
     void Update()
@@ -42,7 +38,7 @@ public class HealthDisplay_CATALYST : MonoBehaviour
             else if (currentHealth <= maxHealth / 2)
                 healthText.color = Color.yellow;
             else
-                healthText.color = Color.white;
+                healthText.color = Color.green;
         }
         
         if (healthHearts != null)
@@ -67,7 +63,7 @@ public class HealthDisplay_CATALYST : MonoBehaviour
         GameObject canvasObj = new GameObject("HealthCanvas");
         Canvas canvas = canvasObj.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
+        canvas.sortingOrder = 1000;
         
         canvasObj.AddComponent<CanvasScaler>();
         canvasObj.AddComponent<GraphicRaycaster>();
@@ -76,16 +72,19 @@ public class HealthDisplay_CATALYST : MonoBehaviour
         textObj.transform.SetParent(canvasObj.transform, false);
         
         Text text = textObj.AddComponent<Text>();
-        text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-        text.fontSize = 24;
-        text.color = Color.white;
-        text.text = "Health: 3/3";
+        text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        text.fontSize = 48; // Much bigger
+        text.color = Color.red; // Bright red color
+        int currentHealth = player.GetCurrentHealth();
+        int maxHealth = player.GetMaxHealth();
+        text.text = $"Health: {currentHealth}/{maxHealth}";
+        text.alignment = TextAnchor.MiddleCenter;
         
         RectTransform rectTransform = textObj.GetComponent<RectTransform>();
-        rectTransform.anchorMin = new Vector2(0, 1);
-        rectTransform.anchorMax = new Vector2(0, 1);
-        rectTransform.anchoredPosition = new Vector2(20, -20);
-        rectTransform.sizeDelta = new Vector2(200, 30);
+        rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        rectTransform.anchoredPosition = new Vector2(0, 200);
+        rectTransform.sizeDelta = new Vector2(400, 60);
         
         healthText = text;
     }

@@ -1941,7 +1941,7 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   moveSpeedGround: 4
   moveSpeedAir: 0
-  maxHealth: 3
+  maxHealth: 9
   invincibilityDuration: 1.5
   knockbackDuration: 0.3
   flashDuration: 0.1
