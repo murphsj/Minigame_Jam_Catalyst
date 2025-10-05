@@ -62,6 +62,7 @@ public class Player_CATALYST : MonoBehaviour
     bool isHoldingDoubleJump = false;
     float doubleJumpHoldTime = 0f;
     MovementController_CATALYST controller;
+    Animator animator;
     
     // Health and damage variables
     private int currentHealth;
@@ -84,6 +85,7 @@ public class Player_CATALYST : MonoBehaviour
     {
         controller = GetComponent<MovementController_CATALYST>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
 
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -208,7 +210,7 @@ public class Player_CATALYST : MonoBehaviour
             }
             if (CanPlayerAct()) SetState(moveDirection.x != 0 ? PlayerState.Walk : PlayerState.Idle);
         }
-        
+
         UpdateDamageSystem();
     }
     
@@ -272,24 +274,24 @@ public class Player_CATALYST : MonoBehaviour
         // Don't take damage if invincible
         if (isInvincible)
             return;
-        
+
         // Apply damage
         currentHealth -= damage;
         SetState(PlayerState.Damaged);
         Debug.Log($"Player took {damage} damage! Health: {currentHealth}/{maxHealth}");
-        
+
         // Activate invincibility
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;
-        
+
         // Apply knockback
         knockbackVelocity = knockbackDirection.normalized * knockbackForce;
         isKnockedBack = true;
         knockbackTimer = knockbackDuration;
-        
+
         // Override current velocity with knockback
         velocity = knockbackVelocity;
-        
+
 
         if (currentHealth <= 0)
         {
