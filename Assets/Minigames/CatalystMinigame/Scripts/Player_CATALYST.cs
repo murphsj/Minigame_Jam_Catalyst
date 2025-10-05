@@ -34,6 +34,13 @@ public class Player_CATALYST : MonoBehaviour
     public float maxForwardForce = 8f;
     public float forwardForcePerSecond = 8f;
     
+    [Header("Ground Slam")]
+    public float slamForce = 15f;
+    public float slamRadius = 3f;
+    public int slamDamage = 2;
+    public float screenShakeIntensity = 0.5f;
+    public float screenShakeDuration = 0.3f;
+    
     [Header("Health System")]
     public int maxHealth = 9;
     public float invincibilityDuration = 1.5f;
@@ -60,7 +67,6 @@ public class Player_CATALYST : MonoBehaviour
     bool flipped;
     bool hasDoubleJumped = false;
     bool isHoldingDoubleJump = false;
-    float doubleJumpHoldTime = 0f;
     MovementController_CATALYST controller;
     
     // Health and damage variables
@@ -71,6 +77,12 @@ public class Player_CATALYST : MonoBehaviour
     private float invincibilityTimer;
     private float knockbackTimer;
     private SpriteRenderer spriteRenderer;
+    
+    // Powerup system
+    private int pounceCharges = 0;
+    private bool isPoweredUp = false;
+    private float powerupTimer = 0f;
+    private bool isHoldingSlam = false;
 
     PlayerState playerState;
     DropletType[] flaskStorage;
@@ -95,6 +107,7 @@ public class Player_CATALYST : MonoBehaviour
 
         flaskStorage = new DropletType[10];
         UpdateFlaskSprite();
+        
     }
 
     void Update()
@@ -115,6 +128,20 @@ public class Player_CATALYST : MonoBehaviour
                     float additionalForce = forwardForcePerSecond * Time.deltaTime;
                     velocity.x += additionalForce * forwardDirection;
                 }
+            }
+        }
+        
+        // Handle powerup timer
+        if (isPoweredUp)
+        {
+            powerupTimer -= Time.deltaTime;
+            if (powerupTimer <= 0)
+            {
+                isPoweredUp = false;
+                pounceCharges = 0;
+                // Stop glowing
+                if (spriteRenderer != null)
+                    spriteRenderer.color = Color.white;
             }
         }
     }
@@ -161,6 +188,31 @@ public class Player_CATALYST : MonoBehaviour
         if (moveDirection.x != 0)
         {
             flipped = moveDirection.x > 0;
+        }
+    }
+    
+    void OnGroundSlam(InputValue inputValue)
+    {
+        if (!MinigameManager.IsReady()) return;
+        if (!CanPlayerAct()) return;
+        
+        if (inputValue.isPressed)
+        {
+            // Start ground slam
+            if (isPoweredUp && pounceCharges > 0 && controller.collisions.below)
+            {
+                isHoldingSlam = true;
+                Debug.Log("Charging ground slam...");
+            }
+        }
+        else
+        {
+            // Release ground slam
+            if (isHoldingSlam)
+            {
+                PerformGroundSlam();
+                isHoldingSlam = false;
+            }
         }
     }
 
@@ -330,8 +382,66 @@ public class Player_CATALYST : MonoBehaviour
         return false; // flask is full
     }
     
+    void PerformGroundSlam()
+    {
+        if (pounceCharges <= 0) return;
+        
+        pounceCharges--;
+        Debug.Log($"Ground slam! Charges remaining: {pounceCharges}");
+        
+        // Screen shake effect
+        Camera.main.GetComponent<CameraShake>()?.Shake(screenShakeIntensity, screenShakeDuration);
+        
+        // Find and damage nearby enemies
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, slamRadius);
+        foreach (Collider2D enemy in enemies)
+        {
+            if (enemy.CompareTag("Enemy"))
+            {
+                Enemy_CATALYST enemyScript = enemy.GetComponent<Enemy_CATALYST>();
+                if (enemyScript != null)
+                {
+                    // Push enemy away
+                    Vector2 direction = (enemy.transform.position - transform.position).normalized;
+                    enemy.GetComponent<Rigidbody2D>()?.AddForce(direction * slamForce, ForceMode2D.Impulse);
+                    
+                    Debug.Log($"Enemy hit by ground slam!");
+                }
+            }
+        }
+        
+        // Visual effect - make player glow briefly
+        if (spriteRenderer != null)
+        {
+            StartCoroutine(GlowEffect());
+        }
+    }
+    
+    System.Collections.IEnumerator GlowEffect()
+    {
+        Color originalColor = spriteRenderer.color;
+        spriteRenderer.color = Color.yellow;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = originalColor;
+    }
+    
+    public void CollectPowerup(int charges, float duration)
+    {
+        pounceCharges += charges;
+        isPoweredUp = true;
+        powerupTimer = duration;
+        
+        // Make player glow
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.cyan;
+            
+        Debug.Log($"Powerup collected! Ground slam charges: {pounceCharges}");
+    }
+    
     // Public getters for UI or other systems
     public int GetCurrentHealth() { return currentHealth; }
     public int GetMaxHealth() { return maxHealth; }
     public bool IsInvincible() { return isInvincible; }
+    public int GetPounceCharges() { return pounceCharges; }
+    public bool IsPoweredUp() { return isPoweredUp; }
 }
