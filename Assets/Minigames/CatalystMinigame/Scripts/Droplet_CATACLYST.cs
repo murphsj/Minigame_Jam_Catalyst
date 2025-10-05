@@ -40,10 +40,33 @@ public class Droplet_CATACLYST : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Droplet hit: " + other.name);
+        
+        // Try to find Player_CATALYST in the collider's parent hierarchy
         Player_CATALYST player = other.GetComponentInParent<Player_CATALYST>();
+        
+        // If not found in parent, try the collider itself
+        if (player == null)
+        {
+            player = other.GetComponent<Player_CATALYST>();
+        }
+        
         if (player != null)
         {
-            if (player.AddToFlask(dropletType)) Destroy(gameObject);
+            Debug.Log("Player found, trying to add to flask: " + dropletType);
+            if (player.AddToFlask(dropletType)) 
+            {
+                Debug.Log("Droplet collected successfully!");
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("Flask is full!");
+            }
+        }
+        else
+        {
+            Debug.Log("No Player_CATALYST found - droplet hit: " + other.name);
         }
     }
     
