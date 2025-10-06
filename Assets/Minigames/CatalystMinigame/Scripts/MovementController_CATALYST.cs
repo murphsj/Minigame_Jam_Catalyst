@@ -29,7 +29,7 @@ public class MovementController_CATALYST : MonoBehaviour
 
     public LayerMask collisionMask;
 
-    const float skinWidth = 0.015f;
+    const float skinWidth = 0.3f;
 
     public int horizontalRayCount = 4;
     public int verticalRayCount = 4;

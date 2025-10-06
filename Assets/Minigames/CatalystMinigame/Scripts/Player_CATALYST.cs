@@ -59,6 +59,8 @@ public class Player_CATALYST : MonoBehaviour
     Vector2 moveDirection;
     bool flipped;
     bool hasDoubleJumped = false;
+    Vector3 originalScale;
+    bool lastFlippedState;
     bool isHoldingDoubleJump = false;
     float doubleJumpHoldTime = 0f;
     MovementController_CATALYST controller;
@@ -86,6 +88,10 @@ public class Player_CATALYST : MonoBehaviour
         controller = GetComponent<MovementController_CATALYST>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        // Store original scale to preserve it during flipping
+        originalScale = transform.localScale;
+        lastFlippedState = flipped;
 
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -173,13 +179,18 @@ public class Player_CATALYST : MonoBehaviour
 
     void UpdateFlipped()
     {
-        if (flipped)
+        // Only update scale if flip state has changed
+        if (flipped != lastFlippedState)
         {
-            gameObject.transform.localScale = new Vector2(1, gameObject.transform.localScale.y);
-        }
-        else
-        {
-            gameObject.transform.localScale = new Vector2(-1, gameObject.transform.localScale.y);
+            if (flipped)
+            {
+                transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+            }
+            else
+            {
+                transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+            }
+            lastFlippedState = flipped;
         }
     }
 
