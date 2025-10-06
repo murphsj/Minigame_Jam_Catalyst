@@ -125,6 +125,7 @@ public class Player_CATALYST : MonoBehaviour
                 }
             }
         }
+        animator.SetFloat("xVel", Math.Abs(velocity.x));
     }
 
     void OnInteract(InputValue inputValue)

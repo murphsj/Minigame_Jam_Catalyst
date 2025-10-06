@@ -416,7 +416,7 @@ SpriteRenderer:
   m_Size: {x: 0.58, y: 1.82}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &489864761
@@ -2664,6 +2664,7 @@ GameObject:
   - component: {fileID: 1951401411}
   - component: {fileID: 1951401412}
   - component: {fileID: 1951401413}
+  - component: {fileID: 1951401414}
   m_Layer: 6
   m_Name: FlaskHitbox
   m_TagString: Untagged
