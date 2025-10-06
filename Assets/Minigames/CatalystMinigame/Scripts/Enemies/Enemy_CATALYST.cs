@@ -41,4 +41,11 @@ public class Enemy_CATALYST : MonoBehaviour
             player.TakeDamage(1, 20f, knockbackDir);
         }
     }
+    
+    public void TakeDamage(int damage)
+    {
+        Debug.Log($"Enemy took {damage} damage!");
+        // For now, just destroy the enemy when hit
+        Destroy(gameObject);
+    }
 }

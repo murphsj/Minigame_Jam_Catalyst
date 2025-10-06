@@ -87,6 +87,7 @@ public class Player_CATALYST : MonoBehaviour
     private bool isPoweredUp = false;
     private float powerupTimer = 0f;
     private bool isHoldingSlam = false;
+    private bool isPowerupInvincible = false; // Separate from damage invincibility
 
     PlayerState playerState;
     DropletType[] flaskStorage;
@@ -152,6 +153,16 @@ public class Player_CATALYST : MonoBehaviour
                     spriteRenderer.color = Color.white;
             }
         }
+        
+        // Make powered-up players invincible (separate from damage invincibility)
+        if (isPoweredUp)
+        {
+            isPowerupInvincible = true;
+        }
+        else
+        {
+            isPowerupInvincible = false;
+        }
     }
 
     void OnInteract(InputValue inputValue)
@@ -201,25 +212,48 @@ public class Player_CATALYST : MonoBehaviour
     
     void OnGroundSlam(InputValue inputValue)
     {
-        if (!MinigameManager.IsReady()) return;
-        if (!CanPlayerAct()) return;
+        Debug.Log($"OnGroundSlam called! isPressed: {inputValue.isPressed}");
+        Debug.Log($"Game ready: {MinigameManager.IsReady()}, Can act: {CanPlayerAct()}");
+        Debug.Log($"Powered up: {isPoweredUp}, Charges: {pounceCharges}, On ground: {controller.collisions.below}");
+        
+        if (!MinigameManager.IsReady()) 
+        {
+            Debug.Log("Game not ready!");
+            return;
+        }
+        if (!CanPlayerAct()) 
+        {
+            Debug.Log("Player cannot act!");
+            return;
+        }
         
         if (inputValue.isPressed)
         {
+            Debug.Log("E key pressed - checking conditions...");
             // Start ground slam
             if (isPoweredUp && pounceCharges > 0 && controller.collisions.below)
             {
                 isHoldingSlam = true;
                 Debug.Log("Charging ground slam...");
             }
+            else
+            {
+                Debug.Log("Ground slam conditions not met!");
+            }
         }
         else
         {
+            Debug.Log("E key released");
             // Release ground slam
             if (isHoldingSlam)
             {
+                Debug.Log("Executing ground slam!");
                 PerformGroundSlam();
                 isHoldingSlam = false;
+            }
+            else
+            {
+                Debug.Log("Was not holding slam");
             }
         }
     }
@@ -334,8 +368,8 @@ public class Player_CATALYST : MonoBehaviour
     /// <param name="knockbackDirection">Direction of knockback (normalized)</param>
     public void TakeDamage(int damage, float knockbackForce, Vector2 knockbackDirection)
     {
-        // Don't take damage if invincible
-        if (isInvincible)
+        // Don't take damage if invincible (either from damage or powerup)
+        if (isInvincible || isPowerupInvincible)
             return;
 
         // Apply damage
@@ -414,11 +448,14 @@ public class Player_CATALYST : MonoBehaviour
                 Enemy_CATALYST enemyScript = enemy.GetComponent<Enemy_CATALYST>();
                 if (enemyScript != null)
                 {
+                    // Deal damage to enemy (kill them)
+                    enemyScript.TakeDamage(slamDamage);
+                    
                     // Push enemy away
                     Vector2 direction = (enemy.transform.position - transform.position).normalized;
                     enemy.GetComponent<Rigidbody2D>()?.AddForce(direction * slamForce, ForceMode2D.Impulse);
                     
-                    Debug.Log($"Enemy hit by ground slam!");
+                    Debug.Log($"Enemy hit by ground slam! Damage: {slamDamage}");
                 }
             }
         }
