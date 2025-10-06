@@ -45,7 +45,15 @@ public class Enemy_CATALYST : MonoBehaviour
     public void TakeDamage(int damage)
     {
         Debug.Log($"Enemy took {damage} damage!");
-        // For now, just destroy the enemy when hit
+        
+        // Notify the spawner that an enemy was killed
+        EnemySpawner_CATALYST spawner = FindObjectOfType<EnemySpawner_CATALYST>();
+        if (spawner != null)
+        {
+            spawner.OnEnemyKilled();
+        }
+        
+        // Destroy the enemy
         Destroy(gameObject);
     }
 }

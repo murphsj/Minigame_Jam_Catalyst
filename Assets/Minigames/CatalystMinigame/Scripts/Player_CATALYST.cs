@@ -96,6 +96,7 @@ public class Player_CATALYST : MonoBehaviour
     private bool isHoldingSlam = false;
     private float plungeCharge = 0f;
     private bool isPowerupInvincible = false; // Separate from damage invincibility
+    
 
     PlayerState playerState;
     DropletType[] flaskStorage;
@@ -129,6 +130,7 @@ public class Player_CATALYST : MonoBehaviour
 
         flaskStorage = new DropletType[10];
         UpdateFlaskSprite();
+        
     }
     
     IEnumerator DelayedControllerCheck()
@@ -166,6 +168,7 @@ public class Player_CATALYST : MonoBehaviour
         {
             plungeCharge += chargeRate * Time.deltaTime;
         }
+        
         
         // Handle powerup timer
         if (isPoweredUp)
@@ -480,8 +483,6 @@ public class Player_CATALYST : MonoBehaviour
         // Wait for player to land on ground
         yield return new WaitUntil(() => controller != null && controller.collisions.below);
         
-        // Spawn some enemies for testing if none exist
-        SpawnTestEnemies();
         
         // Kill all enemies in radius
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, plungeRadius);
@@ -499,26 +500,6 @@ public class Player_CATALYST : MonoBehaviour
         Camera.main.GetComponent<CameraShake>()?.Shake(screenShakeIntensity * 1.5f, screenShakeDuration);
     }
     
-    void SpawnTestEnemies()
-    {
-        // Check if there are any enemies in the scene
-        Enemy_CATALYST[] existingEnemies = FindObjectsOfType<Enemy_CATALYST>();
-        if (existingEnemies.Length == 0)
-        {
-            // Spawn enemies around the player for testing
-            for (int i = 0; i < 3; i++)
-            {
-                float angle = i * 120f * Mathf.Deg2Rad;
-                Vector3 spawnPos = transform.position + new Vector3(Mathf.Cos(angle) * 2f, 0, 0);
-                
-                // Create a simple enemy GameObject
-                GameObject enemy = new GameObject($"TestEnemy_{i}");
-                enemy.transform.position = spawnPos;
-                enemy.AddComponent<BoxCollider2D>().size = new Vector2(1f, 1f);
-                enemy.AddComponent<Enemy_CATALYST>();
-            }
-        }
-    }
     
     System.Collections.IEnumerator GlowEffect()
     {

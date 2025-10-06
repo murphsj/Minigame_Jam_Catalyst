@@ -31,8 +31,11 @@ public class MinigameManager : MonoBehaviour
 
     void Start()
     {
-        CoreUI.Timer.maxValue = minigameLength;
-        CoreUI.Timer.value = minigameLength;
+        if (CoreUI.Timer != null)
+        {
+            CoreUI.Timer.maxValue = minigameLength;
+            CoreUI.Timer.value = minigameLength;
+        }
 
         // Ready countdown:
         mstate = MinigameState.READY;
@@ -44,14 +47,16 @@ public class MinigameManager : MonoBehaviour
         Time.timeScale = 0f;
         for (int i = 3; i > 0; i--)
         {
-            CoreUI.CountdownText.text = i.ToString();
+            if (CoreUI.CountdownText != null)
+                CoreUI.CountdownText.text = i.ToString();
             yield return new WaitForSecondsRealtime(1);
         }
 
         // Start game
         Time.timeScale = 1f;
         mstate = MinigameState.PLAYING;
-        CoreUI.CountdownText.gameObject.SetActive(false);
+        if (CoreUI.CountdownText != null)
+            CoreUI.CountdownText.gameObject.SetActive(false);
 
         foreach (MinigameSubscriber s in subscribers)
             s.OnMinigameStart();
@@ -59,12 +64,17 @@ public class MinigameManager : MonoBehaviour
 
     void Update()
     {
-        CoreUI.Timer.value -= Time.deltaTime;
-        if (CoreUI.Timer.value <= CoreUI.Timer.minValue)
+        // Check if CoreUI Timer is properly set up
+        if (CoreUI.Timer != null)
         {
-            foreach (MinigameSubscriber s in subscribers)
-                s.OnTimerEnd();
+            CoreUI.Timer.value -= Time.deltaTime;
+            if (CoreUI.Timer.value <= CoreUI.Timer.minValue)
+            {
+                foreach (MinigameSubscriber s in subscribers)
+                    s.OnTimerEnd();
+            }
         }
+        // Don't spam the console with warnings - just silently continue
     }
 
     // Exposed functions
