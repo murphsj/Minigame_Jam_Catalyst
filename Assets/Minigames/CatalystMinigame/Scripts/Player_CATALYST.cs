@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -41,6 +42,13 @@ public class Player_CATALYST : MonoBehaviour
     public float screenShakeIntensity = 0.5f;
     public float screenShakeDuration = 0.3f;
     
+    [Header("Plunge Attack")]
+    public float minPlungeHeight = 1f;
+    public float maxPlungeHeight = 5f;
+    public float chargeRate = 2f;
+    public float plungeRadius = 4f;
+    public int plungeDamage = 3;
+    
     [Header("Health System")]
     public int maxHealth = 9;
     public float invincibilityDuration = 1.5f;
@@ -69,7 +77,6 @@ public class Player_CATALYST : MonoBehaviour
     Vector3 originalScale;
     bool lastFlippedState;
     bool isHoldingDoubleJump = false;
-    float doubleJumpHoldTime = 0f;
     MovementController_CATALYST controller;
     Animator animator;
     
@@ -87,6 +94,7 @@ public class Player_CATALYST : MonoBehaviour
     private bool isPoweredUp = false;
     private float powerupTimer = 0f;
     private bool isHoldingSlam = false;
+    private float plungeCharge = 0f;
     private bool isPowerupInvincible = false; // Separate from damage invincibility
 
     PlayerState playerState;
@@ -99,9 +107,13 @@ public class Player_CATALYST : MonoBehaviour
 
     void Start()
     {
+        // Get components
         controller = GetComponent<MovementController_CATALYST>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        // Additional check after a short delay
+        StartCoroutine(DelayedControllerCheck());
 
         // Store original scale to preserve it during flipping
         originalScale = transform.localScale;
@@ -117,6 +129,15 @@ public class Player_CATALYST : MonoBehaviour
 
         flaskStorage = new DropletType[10];
         UpdateFlaskSprite();
+    }
+    
+    IEnumerator DelayedControllerCheck()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (controller == null)
+        {
+            controller = GetComponent<MovementController_CATALYST>();
+        }
     }
 
     void Update()
@@ -138,6 +159,12 @@ public class Player_CATALYST : MonoBehaviour
                     velocity.x += additionalForce * forwardDirection;
                 }
             }
+        }
+        
+        // Update plunge charge while holding E
+        if (isHoldingSlam)
+        {
+            plungeCharge += chargeRate * Time.deltaTime;
         }
         
         // Handle powerup timer
@@ -173,7 +200,7 @@ public class Player_CATALYST : MonoBehaviour
         if (inputValue.isPressed)
         {
             // Button pressed down
-            if (controller.collisions.below)
+            if (controller != null && controller.collisions.below)
             {
                 //normal jump when on ground
                 velocity.y = jumpVelocity;
@@ -212,48 +239,24 @@ public class Player_CATALYST : MonoBehaviour
     
     void OnGroundSlam(InputValue inputValue)
     {
-        Debug.Log($"OnGroundSlam called! isPressed: {inputValue.isPressed}");
-        Debug.Log($"Game ready: {MinigameManager.IsReady()}, Can act: {CanPlayerAct()}");
-        Debug.Log($"Powered up: {isPoweredUp}, Charges: {pounceCharges}, On ground: {controller.collisions.below}");
-        
-        if (!MinigameManager.IsReady()) 
-        {
-            Debug.Log("Game not ready!");
-            return;
-        }
-        if (!CanPlayerAct()) 
-        {
-            Debug.Log("Player cannot act!");
-            return;
-        }
+        if (!MinigameManager.IsReady() || !CanPlayerAct()) return;
         
         if (inputValue.isPressed)
         {
-            Debug.Log("E key pressed - checking conditions...");
-            // Start ground slam
-            if (isPoweredUp && pounceCharges > 0 && controller.collisions.below)
+            // First E press - start charging
+            if (isPoweredUp && pounceCharges > 0 && controller != null && controller.collisions.below)
             {
-                isHoldingSlam = true;
-                Debug.Log("Charging ground slam...");
-            }
-            else
-            {
-                Debug.Log("Ground slam conditions not met!");
-            }
-        }
-        else
-        {
-            Debug.Log("E key released");
-            // Release ground slam
-            if (isHoldingSlam)
-            {
-                Debug.Log("Executing ground slam!");
-                PerformGroundSlam();
-                isHoldingSlam = false;
-            }
-            else
-            {
-                Debug.Log("Was not holding slam");
+                if (!isHoldingSlam)
+                {
+                    isHoldingSlam = true;
+                    plungeCharge = 0f;
+                }
+                else
+                {
+                    // Second E press - execute plunge
+                    PerformPlungeAttack();
+                    isHoldingSlam = false;
+                }
             }
         }
     }
@@ -290,15 +293,30 @@ public class Player_CATALYST : MonoBehaviour
             velocity.x = moveDirection.x * (controller.collisions.below ? moveSpeedGround : moveSpeedAir);
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        // Try to get controller if we don't have it yet
+        if (controller == null)
+        {
+            controller = GetComponent<MovementController_CATALYST>();
+        }
+        
+        // Apply movement and gravity
+        if (controller != null)
+        {
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
+        else
+        {
+            // Fallback: apply basic movement without collision detection
+            transform.Translate(velocity * Time.deltaTime);
+        }
 
-        if (controller.collisions.above || controller.collisions.below)
+        if (controller != null && (controller.collisions.above || controller.collisions.below))
         {
             velocity.y = 0;
         }
 
-        if (controller.collisions.below)
+        if (controller != null && controller.collisions.below)
         {
             if (playerState == PlayerState.Jump)
             {
@@ -408,7 +426,6 @@ public class Player_CATALYST : MonoBehaviour
         Vector4[] flaskColors = new Vector4[10];
         for (int i = 0; i < flaskColors.Length; i++)
         {
-            Debug.Log(flaskStorage[i].getColor());
             flaskColors[i] = flaskStorage[i].getColor();
         }
         
@@ -429,41 +446,77 @@ public class Player_CATALYST : MonoBehaviour
         return false; // flask is full
     }
     
-    void PerformGroundSlam()
+    void PerformPlungeAttack()
     {
         if (pounceCharges <= 0) return;
         
         pounceCharges--;
-        Debug.Log($"Ground slam! Charges remaining: {pounceCharges}");
         
-        // Screen shake effect
+        // Calculate jump height based on charge time
+        float jumpHeight = Mathf.Lerp(minPlungeHeight, maxPlungeHeight, Mathf.Clamp01(plungeCharge));
+        
+        // Vertical jump
+        velocity.y = Mathf.Sqrt(2 * jumpHeight * Mathf.Abs(gravity));
+        SetState(PlayerState.Jump);
+        
+        // Screen shake
         Camera.main.GetComponent<CameraShake>()?.Shake(screenShakeIntensity, screenShakeDuration);
         
-        // Find and damage nearby enemies
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, slamRadius);
-        foreach (Collider2D enemy in enemies)
-        {
-            if (enemy.CompareTag("Enemy"))
-            {
-                Enemy_CATALYST enemyScript = enemy.GetComponent<Enemy_CATALYST>();
-                if (enemyScript != null)
-                {
-                    // Deal damage to enemy (kill them)
-                    enemyScript.TakeDamage(slamDamage);
-                    
-                    // Push enemy away
-                    Vector2 direction = (enemy.transform.position - transform.position).normalized;
-                    enemy.GetComponent<Rigidbody2D>()?.AddForce(direction * slamForce, ForceMode2D.Impulse);
-                    
-                    Debug.Log($"Enemy hit by ground slam! Damage: {slamDamage}");
-                }
-            }
-        }
-        
-        // Visual effect - make player glow briefly
+        // Visual effect
         if (spriteRenderer != null)
         {
             StartCoroutine(GlowEffect());
+        }
+        
+        // Start drill down effect after reaching peak
+        StartCoroutine(DrillDownEffect());
+    }
+    
+    IEnumerator DrillDownEffect()
+    {
+        // Wait for player to reach peak of jump
+        yield return new WaitUntil(() => velocity.y <= 0);
+        
+        // Wait for player to land on ground
+        yield return new WaitUntil(() => controller != null && controller.collisions.below);
+        
+        // Spawn some enemies for testing if none exist
+        SpawnTestEnemies();
+        
+        // Kill all enemies in radius
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, plungeRadius);
+        
+        foreach (Collider2D enemy in enemies)
+        {
+            Enemy_CATALYST enemyScript = enemy.GetComponent<Enemy_CATALYST>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage(plungeDamage);
+            }
+        }
+        
+        // Screen shake for impact
+        Camera.main.GetComponent<CameraShake>()?.Shake(screenShakeIntensity * 1.5f, screenShakeDuration);
+    }
+    
+    void SpawnTestEnemies()
+    {
+        // Check if there are any enemies in the scene
+        Enemy_CATALYST[] existingEnemies = FindObjectsOfType<Enemy_CATALYST>();
+        if (existingEnemies.Length == 0)
+        {
+            // Spawn enemies around the player for testing
+            for (int i = 0; i < 3; i++)
+            {
+                float angle = i * 120f * Mathf.Deg2Rad;
+                Vector3 spawnPos = transform.position + new Vector3(Mathf.Cos(angle) * 2f, 0, 0);
+                
+                // Create a simple enemy GameObject
+                GameObject enemy = new GameObject($"TestEnemy_{i}");
+                enemy.transform.position = spawnPos;
+                enemy.AddComponent<BoxCollider2D>().size = new Vector2(1f, 1f);
+                enemy.AddComponent<Enemy_CATALYST>();
+            }
         }
     }
     
@@ -495,3 +548,4 @@ public class Player_CATALYST : MonoBehaviour
     public int GetPounceCharges() { return pounceCharges; }
     public bool IsPoweredUp() { return isPoweredUp; }
 }
+
