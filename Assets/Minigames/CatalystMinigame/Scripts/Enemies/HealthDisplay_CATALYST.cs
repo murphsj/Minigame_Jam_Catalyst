@@ -12,7 +12,7 @@ public class HealthDisplay_CATALYST : MonoBehaviour
     
     void Start()
     {
-        player = FindObjectOfType<Player_CATALYST>();
+        player = FindFirstObjectByType<Player_CATALYST>();
         CreateSimpleHealthDisplay();
     }
     
@@ -28,17 +28,26 @@ public class HealthDisplay_CATALYST : MonoBehaviour
     {
         int currentHealth = player.GetCurrentHealth();
         int maxHealth = player.GetMaxHealth();
+        int pounceCharges = player.GetPounceCharges();
         
         if (healthText != null)
         {
-            healthText.text = $"Health: {currentHealth}/{maxHealth}";
-            
-            if (currentHealth <= 1)
-                healthText.color = Color.red;
-            else if (currentHealth <= maxHealth / 2)
-                healthText.color = Color.yellow;
+            if (player.IsPoweredUp())
+            {
+                healthText.text = $"Health: {currentHealth}/{maxHealth} | Pounce: {pounceCharges}";
+                healthText.color = Color.cyan; // Glow when powered up
+            }
             else
-                healthText.color = Color.green;
+            {
+                healthText.text = $"Health: {currentHealth}/{maxHealth}";
+                
+                if (currentHealth <= 1)
+                    healthText.color = Color.red;
+                else if (currentHealth <= maxHealth / 2)
+                    healthText.color = Color.yellow;
+                else
+                    healthText.color = Color.green;
+            }
         }
         
         if (healthHearts != null)
@@ -73,8 +82,8 @@ public class HealthDisplay_CATALYST : MonoBehaviour
         
         Text text = textObj.AddComponent<Text>();
         text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        text.fontSize = 48; // Much bigger
-        text.color = Color.red; // Bright red color
+        text.fontSize = 48;
+        text.color = Color.red;
         int currentHealth = player.GetCurrentHealth();
         int maxHealth = player.GetMaxHealth();
         text.text = $"Health: {currentHealth}/{maxHealth}";
