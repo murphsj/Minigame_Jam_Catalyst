@@ -416,7 +416,7 @@ SpriteRenderer:
   m_Size: {x: 0.58, y: 1.82}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &489864761
@@ -604,7 +604,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 23.35321
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1783,6 +1783,8 @@ MonoBehaviour:
   dropletMoveSpeed: 2.5
   dropletSpawnRate: 1
   dropletLifetime: 6
+  powerupPrefab: {fileID: 1220171204632236568, guid: b9718802ac94a4e8d811ff70c726f762, type: 3}
+  powerupSpawnChance: 0.1
 --- !u!4 &1264668436
 Transform:
   m_ObjectHideFlags: 0
@@ -2322,6 +2324,11 @@ MonoBehaviour:
   doubleJumpHeight: 3
   maxForwardForce: 8
   forwardForcePerSecond: 8
+  slamForce: 15
+  slamRadius: 3
+  slamDamage: 2
+  screenShakeIntensity: 0.5
+  screenShakeDuration: 0.3
   maxHealth: 9
   invincibilityDuration: 1.5
   knockbackDuration: 0.3
@@ -2664,6 +2671,7 @@ GameObject:
   - component: {fileID: 1951401411}
   - component: {fileID: 1951401412}
   - component: {fileID: 1951401413}
+  - component: {fileID: 1951401414}
   m_Layer: 6
   m_Name: FlaskHitbox
   m_TagString: Untagged

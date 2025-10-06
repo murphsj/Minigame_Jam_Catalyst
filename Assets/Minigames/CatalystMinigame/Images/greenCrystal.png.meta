@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: b3d3208bf275443ab8d010566ab1ff55
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4836927038407101088
+    second: greenCrystal_0
+  - first:
+      213: -7349186125614289055
+    second: greenCrystal_1
+  - first:
+      213: 8736898253432272447
+    second: greenCrystal_2
+  - first:
+      213: -6801399910088095949
+    second: greenCrystal_3
+  - first:
+      213: -467792894822663410
+    second: greenCrystal_4
+  - first:
+      213: 4659696671637202093
+    second: greenCrystal_5
+  - first:
+      213: -4970090283167484541
+    second: greenCrystal_6
+  - first:
+      213: -3790572057270442664
+    second: greenCrystal_7
+  - first:
+      213: 404905650328443390
+    second: greenCrystal_8
+  - first:
+      213: -6103390742647247565
+    second: greenCrystal_9
+  - first:
+      213: -6533750621636412672
+    second: greenCrystal_10
+  - first:
+      213: 8149845625115960670
+    second: greenCrystal_11
+  - first:
+      213: 7892723076850576714
+    second: greenCrystal_12
+  - first:
+      213: 6641687447488111232
+    second: greenCrystal_13
+  - first:
+      213: -8170705682217039735
+    second: greenCrystal_14
+  - first:
+      213: 2452590119343619865
+    second: greenCrystal_15
+  - first:
+      213: -6193315826565965146
+    second: greenCrystal_16
+  - first:
+      213: 8694435501005176609
+    second: greenCrystal_17
+  - first:
+      213: -6791630583105029149
+    second: greenCrystal_18
+  - first:
+      213: -5085547126980481323
+    second: greenCrystal_19
+  - first:
+      213: 1749683593768639160
+    second: greenCrystal_20
+  - first:
+      213: -8403398231350551569
+    second: greenCrystal_21
+  - first:
+      213: -3253666082254783233
+    second: greenCrystal_22
+  - first:
+      213: -4148915835014733499
+    second: greenCrystal_23
+  - first:
+      213: -5710153643726115932
+    second: greenCrystal_24
+  - first:
+      213: -5083971300648710897
+    second: greenCrystal_25
+  - first:
+      213: -2484285450546742326
+    second: greenCrystal_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: greenCrystal_0
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 1957
+        width: 37
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aaccb8a387302340800000000000000
+      internalID: 4836927038407101088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_1
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 1962
+        width: 73
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16fe78a0822720a90800000000000000
+      internalID: -7349186125614289055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_2
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 1995
+        width: 30
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f36bf82eba2bf3970800000000000000
+      internalID: 8736898253432272447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_3
+      rect:
+        serializedVersion: 2
+        x: 1950
+        y: 1956
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33743df21d29c91a0800000000000000
+      internalID: -6801399910088095949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_4
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 1921
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0bb4a337d01289f0800000000000000
+      internalID: -467792894822663410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_5
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 1951
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da4610a4f619aa040800000000000000
+      internalID: 4659696671637202093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_6
+      rect:
+        serializedVersion: 2
+        x: 1646
+        y: 1925
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3857e2a5831b60bb0800000000000000
+      internalID: -4970090283167484541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_7
+      rect:
+        serializedVersion: 2
+        x: 1885
+        y: 1927
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 855afd61cce256bc0800000000000000
+      internalID: -3790572057270442664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_8
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 1874
+        width: 47
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef9106f2b838e9500800000000000000
+      internalID: 404905650328443390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_9
+      rect:
+        serializedVersion: 2
+        x: 1446
+        y: 1853
+        width: 77
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33d6a1be4766c4ba0800000000000000
+      internalID: -6103390742647247565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_10
+      rect:
+        serializedVersion: 2
+        x: 1518
+        y: 1909
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00bbf5a4d647355a0800000000000000
+      internalID: -6533750621636412672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_11
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 1909
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e55ee439a611a1170800000000000000
+      internalID: 8149845625115960670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_12
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 1838
+        height: 1906
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4de43a22d5988d60800000000000000
+      internalID: 7892723076850576714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_13
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 1714
+        width: 213
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08223b85b830c2c50800000000000000
+      internalID: 6641687447488111232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_14
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 1221
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9880037e872db9e80800000000000000
+      internalID: -8170705682217039735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_15
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1076
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91ffb1b18b9590220800000000000000
+      internalID: 2452590119343619865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_16
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 1055
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aa1bbfb11cec0aa0800000000000000
+      internalID: -6193315826565965146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_17
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1048
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12f75f7e507d8a870800000000000000
+      internalID: 8694435501005176609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_18
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 1060
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eb7850e7f74fb1a0800000000000000
+      internalID: -6791630583105029149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_19
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 1027
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dee1d715d18c69b0800000000000000
+      internalID: -5085547126980481323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 968
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ba98e355ff184810800000000000000
+      internalID: 1749683593768639160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_21
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 907
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feb543ae4d1216b80800000000000000
+      internalID: -8403398231350551569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 869
+        width: 30
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffc7775dfe7a8d2d0800000000000000
+      internalID: -3253666082254783233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_23
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 862
+        width: 39
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54124faa7071c66c0800000000000000
+      internalID: -4148915835014733499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_24
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 820
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ab6dc4c38571c0b0800000000000000
+      internalID: -5710153643726115932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_25
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 787
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0d8d80c90b1279b0800000000000000
+      internalID: -5083971300648710897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenCrystal_26
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 783
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acb7d778b8b068dd0800000000000000
+      internalID: -2484285450546742326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      greenCrystal_0: 4836927038407101088
+      greenCrystal_1: -7349186125614289055
+      greenCrystal_10: -6533750621636412672
+      greenCrystal_11: 8149845625115960670
+      greenCrystal_12: 7892723076850576714
+      greenCrystal_13: 6641687447488111232
+      greenCrystal_14: -8170705682217039735
+      greenCrystal_15: 2452590119343619865
+      greenCrystal_16: -6193315826565965146
+      greenCrystal_17: 8694435501005176609
+      greenCrystal_18: -6791630583105029149
+      greenCrystal_19: -5085547126980481323
+      greenCrystal_2: 8736898253432272447
+      greenCrystal_20: 1749683593768639160
+      greenCrystal_21: -8403398231350551569
+      greenCrystal_22: -3253666082254783233
+      greenCrystal_23: -4148915835014733499
+      greenCrystal_24: -5710153643726115932
+      greenCrystal_25: -5083971300648710897
+      greenCrystal_26: -2484285450546742326
+      greenCrystal_3: -6801399910088095949
+      greenCrystal_4: -467792894822663410
+      greenCrystal_5: 4659696671637202093
+      greenCrystal_6: -4970090283167484541
+      greenCrystal_7: -3790572057270442664
+      greenCrystal_8: 404905650328443390
+      greenCrystal_9: -6103390742647247565
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
