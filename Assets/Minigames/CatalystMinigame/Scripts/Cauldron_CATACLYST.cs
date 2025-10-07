@@ -9,6 +9,8 @@ public class Cauldron_CATACLYST : MonoBehaviour
 
     Vector2 startPoint;
     Vector2 endPoint;
+    Vector3 originalScale;
+
     enum Target
     {
         Start,
@@ -19,6 +21,7 @@ public class Cauldron_CATACLYST : MonoBehaviour
 
     void Start()
     {
+        originalScale = transform.localScale;
         startPoint = transform.position;
         endPoint = (Vector2)transform.position + localEndPoint;
         target = Target.End;
@@ -30,13 +33,23 @@ public class Cauldron_CATACLYST : MonoBehaviour
         if (target == Target.Start)
         {
             transform.position = Vector2.MoveTowards(transform.position, startPoint, maxDistance);
-            if ((Vector2)transform.position == startPoint) target = Target.End;
+            if ((Vector2)transform.position == startPoint)
+            {
+                // Flip on X axis
+                transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+                target = Target.End;
+            }
         }
-        else
-        {
-            transform.position = Vector2.MoveTowards(transform.position, endPoint, maxDistance);
-            if ((Vector2)transform.position == endPoint) target = Target.Start;
-        }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position, endPoint, maxDistance);
+                if ((Vector2)transform.position == endPoint)
+                {
+                    // Unflip on X axis
+                    transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+                    target = Target.Start;
+                }
+            }
     }
 
     private void DrawCoordMarkerGizmo(Vector2 pos)
