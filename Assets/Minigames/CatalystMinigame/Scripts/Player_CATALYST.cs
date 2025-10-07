@@ -125,7 +125,32 @@ public class Player_CATALYST : MonoBehaviour
                 }
             }
         }
-        animator.SetFloat("xVel", Math.Abs(velocity.x));
+        //Animates the player
+        //Changes animation parameters based on playerState enum
+        if (playerState == PlayerState.Walk) //starts walking anim
+        {
+            animator.SetBool("walking", true);
+            animator.SetBool("idling", false);
+            animator.SetBool("jumping", false);
+        } else if (playerState == PlayerState.Idle){ //starts idle anim
+            animator.SetBool("idling", true);
+            animator.SetBool("walking", false);
+            animator.SetBool("jumping", false);
+        } else if (playerState == PlayerState.Jump) //starts jumping anim
+        {
+            animator.SetBool("jumping", true);
+            animator.SetBool("idling", false);
+            animator.SetBool("walking", false);
+        } else if (playerState == PlayerState.Deposit) //starts pouring anim
+        {
+            //pouring is a trigger, meaning that it automatically goes to
+            //whatever state the statemachine has the pouring animation transition to based on the other parameters
+            animator.SetTrigger("pouring"); 
+            animator.SetBool("idling", false);
+            animator.SetBool("jumping", false);
+            animator.SetBool("walking", false);
+        }
+        //animator.SetFloat("xVel", Math.Abs(velocity.x));
     }
 
     void OnInteract(InputValue inputValue)
