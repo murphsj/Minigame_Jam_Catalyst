@@ -40,16 +40,16 @@ public class Cauldron_CATACLYST : MonoBehaviour
                 target = Target.End;
             }
         }
-            else
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, endPoint, maxDistance);
+            if ((Vector2)transform.position == endPoint)
             {
-                transform.position = Vector2.MoveTowards(transform.position, endPoint, maxDistance);
-                if ((Vector2)transform.position == endPoint)
-                {
-                    // Unflip on X axis
-                    transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
-                    target = Target.Start;
-                }
+                // Unflip on X axis
+                transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+                target = Target.Start;
             }
+        }
     }
 
     private void DrawCoordMarkerGizmo(Vector2 pos)

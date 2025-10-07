@@ -42,6 +42,10 @@ public class Player_CATALYST : MonoBehaviour
     [Header("Visual Feedback")]
     public float flashDuration = 0.1f;
 
+    [Header("Actions")]
+    public LayerMask cauldronRaycastMask;
+    public GameObject flask;
+
     // The numeric ID of the global shader property used to control the
     // visual contents of the flask
     static readonly int flaskLayerColorId;
@@ -74,6 +78,7 @@ public class Player_CATALYST : MonoBehaviour
     private float invincibilityTimer;
     private float knockbackTimer;
     private SpriteRenderer spriteRenderer;
+    
 
     PlayerState playerState;
     DropletType[] flaskStorage;
@@ -186,16 +191,50 @@ public class Player_CATALYST : MonoBehaviour
             }
         }
     }
-    
+
 
     void OnMove(InputValue inputValue)
     {
         if (!MinigameManager.IsReady()) return;
-        moveDirection = inputValue.Get<Vector2>();
+        moveDirection = inputValue.Get<Vector2>().normalized;
         if (moveDirection.x != 0)
         {
             flipped = moveDirection.x > 0;
         }
+        if (CanPlayerAct() && moveDirection.y < 0)
+        {
+            TryDeposit();
+        }
+    }
+
+    void TryDeposit()
+    {
+        // Can't deposit if the flask is empty
+        if (flaskStorage[0] == DropletType.None) return;
+        // Raycast down from the center of the cat to check if we're below the cauldron
+        RaycastHit2D hit = Physics2D.Raycast(spriteRenderer.bounds.center, Vector2.down,
+            300, cauldronRaycastMask);
+
+        //Debug.DrawRay(spriteRenderer.bounds.center, Vector2.down * 300, Color.red);
+        //Debug.Break();
+
+        if (hit)
+        {
+            SetState(PlayerState.Deposit);
+            flask.SetActive(false);
+            Invoke("EndDeposit", 0.5f);
+        }
+    }
+
+    void EndDeposit()
+    {
+        flask.SetActive(true);
+        for (int i = 0; i < flaskStorage.Length; i++)
+        {
+            flaskStorage[i] = DropletType.None;
+        }
+        UpdateFlaskSprite();
+        SetState(PlayerState.Idle);
     }
 
     bool CanPlayerAct()
@@ -222,6 +261,7 @@ public class Player_CATALYST : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(playerState);
         if (!MinigameManager.IsReady()) return;
 
         if (playerState == PlayerState.Walk || (moveSpeedAir > 0 && playerState == PlayerState.Jump))
@@ -311,9 +351,13 @@ public class Player_CATALYST : MonoBehaviour
         // Don't take damage if invincible
         if (isInvincible)
             return;
+        // Player is invincible while depositing since it doesn't last very long
+        // It would be quite frustrating to get hit while pouring
+        if (playerState == PlayerState.Deposit)
+            return;
 
         // Apply damage
-        currentHealth -= damage;
+            currentHealth -= damage;
         SetState(PlayerState.Damaged);
         Debug.Log($"Player took {damage} damage! Health: {currentHealth}/{maxHealth}");
 
@@ -348,7 +392,6 @@ public class Player_CATALYST : MonoBehaviour
         Vector4[] flaskColors = new Vector4[10];
         for (int i = 0; i < flaskColors.Length; i++)
         {
-            Debug.Log(flaskStorage[i].getColor());
             flaskColors[i] = flaskStorage[i].getColor();
         }
         
