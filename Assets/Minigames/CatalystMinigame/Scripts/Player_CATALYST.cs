@@ -137,10 +137,12 @@ public class Player_CATALYST : MonoBehaviour
             animator.SetBool("walking", true);
             animator.SetBool("idling", false);
             animator.SetBool("jumping", false);
+            animator.ResetTrigger("pouring");
         } else if (playerState == PlayerState.Idle){ //starts idle anim
             animator.SetBool("idling", true);
             animator.SetBool("walking", false);
             animator.SetBool("jumping", false);
+            animator.ResetTrigger("pouring");
         } else if (playerState == PlayerState.Jump) //starts jumping anim
         {
             animator.SetBool("jumping", true);

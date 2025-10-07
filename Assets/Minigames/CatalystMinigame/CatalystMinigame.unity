@@ -174,7 +174,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5813642739669613065, guid: bd95275d7f1b948d0b56fbac66487528, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1385086100}
   m_SourcePrefab: {fileID: 100100000, guid: bd95275d7f1b948d0b56fbac66487528, type: 3}
 --- !u!1 &229232161
 GameObject:
@@ -604,7 +607,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 23.696781
+  orthographic size: 8.113382
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -836,7 +839,7 @@ Animator:
   m_GameObject: {fileID: 675680901}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1ac6d0ce10ce04bd4bd60e6b9d97eecd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2200,6 +2203,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372020745}
   m_CullTransparentMesh: 1
+--- !u!1 &1385086099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5813642739669613065, guid: bd95275d7f1b948d0b56fbac66487528, type: 3}
+  m_PrefabInstance: {fileID: 85682841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1385086100
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385086099}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1469911812
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,7 +2320,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.37, y: 2.32}
+    oldSize: {x: 3.37, y: 2.69}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
