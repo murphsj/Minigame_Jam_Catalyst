@@ -120,7 +120,7 @@ public class Player_CATALYST : MonoBehaviour
             {
                 //gradually add forward velocity while holding
                 float forwardDirection = moveDirection.x > 0 ? 1f : -1f;
-                
+
                 //add forward force gradually, but cap at maxForwardForce
                 float currentForwardVelocity = Mathf.Abs(velocity.x);
                 if (currentForwardVelocity < maxForwardForce)
@@ -139,14 +139,16 @@ public class Player_CATALYST : MonoBehaviour
             animator.SetBool("jumping", false);
             animator.ResetTrigger("pouring");
             animator.ResetTrigger("double jumping");
+            animator.ResetTrigger("hurting");
         }
-        else if (playerState == PlayerState.Idle)
-        { //starts idle anim
+        else if (playerState == PlayerState.Idle) //starts idle anim
+        {
             animator.SetBool("idling", true);
-            animator.SetBool("walking", false);
             animator.SetBool("jumping", false);
+            animator.SetBool("walking", false);
             animator.ResetTrigger("pouring");
             animator.ResetTrigger("double jumping");
+            animator.ResetTrigger("hurting");
         }
         else if (playerState == PlayerState.Jump) //starts jumping anim
         {
@@ -167,6 +169,15 @@ public class Player_CATALYST : MonoBehaviour
             animator.SetBool("idling", false);
             animator.SetBool("jumping", false);
             animator.SetBool("walking", false);
+        }
+        else if (playerState == PlayerState.Damaged) //starts taking damage anim
+        {
+            animator.SetTrigger("hurting");
+            animator.SetBool("idling", false);
+            animator.SetBool("jumping", false);
+            animator.SetBool("walking", false);
+            animator.ResetTrigger("pouring");
+            animator.ResetTrigger("double jumping");
         }
         //animator.SetFloat("xVel", Math.Abs(velocity.x));
     }
