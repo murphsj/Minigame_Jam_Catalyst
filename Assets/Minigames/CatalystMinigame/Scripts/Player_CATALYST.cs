@@ -138,21 +138,32 @@ public class Player_CATALYST : MonoBehaviour
             animator.SetBool("idling", false);
             animator.SetBool("jumping", false);
             animator.ResetTrigger("pouring");
-        } else if (playerState == PlayerState.Idle){ //starts idle anim
+            animator.ResetTrigger("double jumping");
+        }
+        else if (playerState == PlayerState.Idle)
+        { //starts idle anim
             animator.SetBool("idling", true);
             animator.SetBool("walking", false);
             animator.SetBool("jumping", false);
             animator.ResetTrigger("pouring");
-        } else if (playerState == PlayerState.Jump) //starts jumping anim
+            animator.ResetTrigger("double jumping");
+        }
+        else if (playerState == PlayerState.Jump) //starts jumping anim
         {
             animator.SetBool("jumping", true);
             animator.SetBool("idling", false);
             animator.SetBool("walking", false);
-        } else if (playerState == PlayerState.Deposit) //starts pouring anim
+            if (hasDoubleJumped)
+            {
+                animator.SetTrigger("double jumping");
+                animator.SetBool("jumping", false);
+            }
+        }
+        else if (playerState == PlayerState.Deposit) //starts pouring anim
         {
             //pouring is a trigger, meaning that it automatically goes to
             //whatever state the statemachine has the pouring animation transition to based on the other parameters
-            animator.SetTrigger("pouring"); 
+            animator.SetTrigger("pouring");
             animator.SetBool("idling", false);
             animator.SetBool("jumping", false);
             animator.SetBool("walking", false);
