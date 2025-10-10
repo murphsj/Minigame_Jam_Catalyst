@@ -96,7 +96,7 @@ public class Player_CATALYST : MonoBehaviour
 
         // Store original scale to preserve it during flipping
         originalScale = transform.localScale;
-        lastFlippedState = flipped;
+        lastFlippedState = !flipped;
 
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -113,7 +113,7 @@ public class Player_CATALYST : MonoBehaviour
     void Update()
     {
         // Handle double jump with forward force (leap)
-        if (isHoldingDoubleJump)
+        if (CanPlayerAct() && isHoldingDoubleJump)
         {
             // Only add forward force if player is actually moving (left or right)
             if (moveDirection.x != 0)
@@ -285,7 +285,6 @@ public class Player_CATALYST : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(playerState);
         if (!MinigameManager.IsReady()) return;
 
         if (playerState == PlayerState.Walk || (moveSpeedAir > 0 && playerState == PlayerState.Jump))
@@ -320,6 +319,7 @@ public class Player_CATALYST : MonoBehaviour
         // Handle invincibility timer
         if (isInvincible)
         {
+            Debug.Log(invincibilityTimer);
             invincibilityTimer -= Time.fixedDeltaTime;
             
             // Flash effect during invincibility
@@ -329,15 +329,15 @@ public class Player_CATALYST : MonoBehaviour
                 spriteRenderer.color = new Color(1f, 1f, 1f, flashTime > 0 ? 1f : 0.5f);
             }
 
-            if (invincibilityTimer < 1)
+            if (invincibilityTimer < 1 && playerState == PlayerState.Damaged)
             {
+                velocity = Vector2.zero;
                 // allow movement again
                 SetState(PlayerState.Idle);
             }
             else
             {
                 velocity.x /= 1.3f;
-                velocity.y /= 1.3f;
             }
             
             if (invincibilityTimer <= 0)
