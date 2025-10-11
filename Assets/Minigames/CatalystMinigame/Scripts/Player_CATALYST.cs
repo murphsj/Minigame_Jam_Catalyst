@@ -112,6 +112,7 @@ public class Player_CATALYST : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
         // Handle double jump with forward force (leap)
         if (CanPlayerAct() && isHoldingDoubleJump)
         {
@@ -244,6 +245,7 @@ public class Player_CATALYST : MonoBehaviour
 
         if (hit)
         {
+            velocity.x = 0;
             SetState(PlayerState.Deposit);
             flask.SetActive(false);
             Invoke("EndDeposit", 0.5f);
@@ -285,6 +287,7 @@ public class Player_CATALYST : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Debug.Log(playerState);
         if (!MinigameManager.IsReady()) return;
 
         if (playerState == PlayerState.Walk || (moveSpeedAir > 0 && playerState == PlayerState.Jump))
