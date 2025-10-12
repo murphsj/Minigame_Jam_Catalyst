@@ -417,10 +417,10 @@ public class Player_CATALYST : MonoBehaviour
             return;
 
         // Apply damage
-        /*
+        
         currentHealth -= damage;
         Debug.Log($"Player took {damage} damage! Health: {currentHealth}/{maxHealth}");
-        */
+        
 
         SetState(PlayerState.Damaged);
 
