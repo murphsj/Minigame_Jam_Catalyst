@@ -19,6 +19,8 @@ public class ScoreCounter_CATALYST : MonoBehaviour, MinigameSubscriber
         {
             score.text = "0/" + requiredDrops;
         }
+
+        MinigameManager.Subscribe(this);
     }
 
     private void CheckVictory()
@@ -47,7 +49,7 @@ public class ScoreCounter_CATALYST : MonoBehaviour, MinigameSubscriber
 
     public void OnTimerEnd()
     {
-        Debug.Log("hi");
+        Debug.Log("Timer ended, exiting game");
         MinigameManager.EndGame();
     }
 }
