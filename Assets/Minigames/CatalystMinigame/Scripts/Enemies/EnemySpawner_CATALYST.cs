@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemySpawner_CATALYST : MonoBehaviour
 {
     [Header("Enemy Prefab")]
-    public GameObject enemyPrefab;
+    public Enemy_CATALYST enemyPrefab;
     
     [Header("Spawning Settings")]
     public float spawnInterval = 3f;
@@ -52,16 +52,19 @@ public class EnemySpawner_CATALYST : MonoBehaviour
     
     void SpawnEnemy()
     {
-        if (enemyPrefab == null) 
+        if (enemyPrefab == null)
         {
             Debug.LogError("EnemySpawner: enemyPrefab is not assigned!");
             return;
         }
-
-        Vector3 spawnPosition = new Vector3(0f, -1.5f, 0f);
         
+        bool moveRight = Random.value > 0.5f;
+        
+        Vector3 spawnPosition = new Vector3(moveRight ? -10f : 10f, -1.5f, 0f);
+
         // Spawn enemy from prefab
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        Enemy_CATALYST enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        enemy.Initialize(moveRight);
         enemy.name = "Enemy_" + enemiesSpawned;
         enemy.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         

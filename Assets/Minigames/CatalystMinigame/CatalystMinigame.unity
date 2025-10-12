@@ -131,6 +131,18 @@ PrefabInstance:
       propertyPath: autoStart
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2458002481628654339, guid: bd95275d7f1b948d0b56fbac66487528, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 6158189420074051297, guid: 7c2bc486bd829454293393de3246b751, type: 3}
+    - target: {fileID: 2458002481628654339, guid: bd95275d7f1b948d0b56fbac66487528, type: 3}
+      propertyPath: spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2458002481628654339, guid: bd95275d7f1b948d0b56fbac66487528, type: 3}
+      propertyPath: continuousSpawning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5813642739669613065, guid: bd95275d7f1b948d0b56fbac66487528, type: 3}
       propertyPath: m_Name
       value: Enemy

@@ -8,10 +8,15 @@ public class Enemy_CATALYST : MonoBehaviour
     
     bool movingRight = true;
     Rigidbody2D rb;
-    
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+    
+    public void Initialize(bool movingRight)
+    {
+        this.movingRight = movingRight;
     }
     
     void Update()
@@ -24,11 +29,11 @@ public class Enemy_CATALYST : MonoBehaviour
         
         if (transform.position.x >= rightBoundary && movingRight)
         {
-            movingRight = false;
+            Destroy(gameObject);
         }
         else if (transform.position.x <= leftBoundary && !movingRight)
         {
-            movingRight = true;
+            Destroy(gameObject);
         }
     }
     
