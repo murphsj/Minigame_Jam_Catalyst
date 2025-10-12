@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8547849100882185492}
   - component: {fileID: 2458002481628654339}
+  - component: {fileID: 6329233264033232046}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -44,8 +45,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e813f0c60558465a8f9bc9dc3462ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner_CATALYST
-  enemyPrefab: {fileID: 1686900313175317713, guid: 7c2bc486bd829454293393de3246b751, type: 3}
-  spawnInterval: 3
+  enemyPrefab: {fileID: 6158189420074051297, guid: 7c2bc486bd829454293393de3246b751, type: 3}
+  spawnIntervalMax: 4.5
+  spawnIntervalMin: 3
   autoStart: 1
   maxEnemies: 2
-  continuousSpawning: 0
+  continuousSpawning: 1
+--- !u!95 &6329233264033232046
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813642739669613065}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 39e68f19a87beba41877a7d76ae5a9df, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

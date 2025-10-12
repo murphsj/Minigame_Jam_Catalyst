@@ -5,9 +5,10 @@ public class EnemySpawner_CATALYST : MonoBehaviour
 {
     [Header("Enemy Prefab")]
     public Enemy_CATALYST enemyPrefab;
-    
+
     [Header("Spawning Settings")]
-    public float spawnInterval = 3f;
+    public float spawnIntervalMax = 4.5f;
+    public float spawnIntervalMin = 3f;
     public bool autoStart = true;
     public int maxEnemies = 2;
     public bool continuousSpawning = false;
@@ -45,7 +46,7 @@ public class EnemySpawner_CATALYST : MonoBehaviour
         {
             SpawnEnemy();
             enemiesSpawned++;
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
         }
         isSpawning = false;
     }
@@ -60,19 +61,17 @@ public class EnemySpawner_CATALYST : MonoBehaviour
         
         bool moveRight = Random.value > 0.5f;
         
-        Vector3 spawnPosition = new Vector3(moveRight ? -10f : 10f, -1.5f, 0f);
+        Vector3 spawnPosition = new Vector3(moveRight ? -12f : 12f, -1.8f, 0f);
 
         // Spawn enemy from prefab
         Enemy_CATALYST enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         enemy.Initialize(moveRight);
         enemy.name = "Enemy_" + enemiesSpawned;
-        enemy.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         
         BoxCollider2D bc = enemy.GetComponent<BoxCollider2D>();
         if (bc != null)
         {
             bc.isTrigger = true;
-            bc.size = new Vector2(2f, 2f); // Make collider bigger for collision detection
         }
     }
     

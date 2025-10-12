@@ -3,8 +3,8 @@ using UnityEngine;
 public class Enemy_CATALYST : MonoBehaviour
 {
     public float moveSpeed = 2f;
-    public float leftBoundary = -8f;
-    public float rightBoundary = 8f;
+    public float leftBoundary = -16f;
+    public float rightBoundary = 11f;
     
     bool movingRight = true;
     Rigidbody2D rb;
@@ -17,6 +17,7 @@ public class Enemy_CATALYST : MonoBehaviour
     public void Initialize(bool movingRight)
     {
         this.movingRight = movingRight;
+        GetComponent<SpriteRenderer>().flipX = movingRight;
     }
     
     void Update()
