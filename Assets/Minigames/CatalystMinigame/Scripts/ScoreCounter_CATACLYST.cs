@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ScoreCounter_CATACLYST : MonoBehaviour
+public class ScoreCounter_CATALYST : MonoBehaviour
 {
     public List<TextMeshPro> scoreBoards;
     public int requiredDrops = 20;
@@ -13,6 +13,7 @@ public class ScoreCounter_CATACLYST : MonoBehaviour
     void Start()
     {
         dropletScores = new List<int> { 0, 0, 0, 0 };
+        Debug.Assert(scoreBoards.Count == 4, "ScoreCounter: Scoreboard not set to a valid list of 4 TextMeshPro elements");
 
         foreach (TextMeshPro score in scoreBoards)
         {
@@ -31,7 +32,7 @@ public class ScoreCounter_CATACLYST : MonoBehaviour
         MinigameManager.SetStateToSuccess();
     }
     
-    public void AddDroplet(DropletType_CATACLYST type)
+    public void AddDroplet(DropletType_CATALYST type)
     {
         Debug.Log(dropletScores.Count);
         Debug.Log((int)type-1);

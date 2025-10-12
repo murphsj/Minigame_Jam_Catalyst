@@ -41,7 +41,7 @@ public class Player_CATALYST : MonoBehaviour
     [Header("Actions")]
     public LayerMask cauldronRaycastMask;
     public GameObject flask;
-    public ScoreCounter_CATACLYST scoreCounter;
+    public ScoreCounter_CATALYST scoreCounter;
 
     // The numeric ID of the global shader property used to control the
     // visual contents of the flask
@@ -79,7 +79,7 @@ public class Player_CATALYST : MonoBehaviour
     
 
     PlayerState playerState;
-    DropletType_CATACLYST[] flaskStorage;
+    DropletType_CATALYST[] flaskStorage;
 
     void SetState(PlayerState state)
     {
@@ -105,7 +105,7 @@ public class Player_CATALYST : MonoBehaviour
         // Initialize health
         currentHealth = maxHealth;
 
-        flaskStorage = new DropletType_CATACLYST[10];
+        flaskStorage = new DropletType_CATALYST[10];
         UpdateFlaskSprite();
     }
 
@@ -234,7 +234,7 @@ public class Player_CATALYST : MonoBehaviour
     void TryDeposit()
     {
         // Can't deposit if the flask is empty
-        if (flaskStorage[0] == DropletType_CATACLYST.None) return;
+        if (flaskStorage[0] == DropletType_CATALYST.None) return;
         // Raycast down from the center of the cat to check if we're below the cauldron
         RaycastHit2D hit = Physics2D.Raycast(spriteRenderer.bounds.center, Vector2.down,
             300, cauldronRaycastMask);
@@ -257,11 +257,11 @@ public class Player_CATALYST : MonoBehaviour
     /// </summary>
     void ScoreDroplet()
     {
-        DropletType_CATACLYST topColor = DropletType_CATACLYST.None;
+        DropletType_CATALYST topColor = DropletType_CATALYST.None;
         int totalSize = -1;
         for (int i = 0; i < flaskStorage.Length; i++)
         {
-            if (flaskStorage[i] != DropletType_CATACLYST.None)
+            if (flaskStorage[i] != DropletType_CATALYST.None)
             {
                 topColor = flaskStorage[i];
                 totalSize++;
@@ -272,9 +272,9 @@ public class Player_CATALYST : MonoBehaviour
             }
         }
 
-        if (topColor == DropletType_CATACLYST.None) return;
+        if (topColor == DropletType_CATALYST.None) return;
 
-        flaskStorage[totalSize] = DropletType_CATACLYST.None;
+        flaskStorage[totalSize] = DropletType_CATALYST.None;
 
         var emitParams = new ParticleSystem.EmitParams();
         Vector4 color = topColor.getColor();
@@ -291,7 +291,7 @@ public class Player_CATALYST : MonoBehaviour
         flask.SetActive(true);
         for (int i = 0; i < flaskStorage.Length; i++)
         {
-            flaskStorage[i] = DropletType_CATACLYST.None;
+            flaskStorage[i] = DropletType_CATALYST.None;
         }
         UpdateFlaskSprite();
         SetState(PlayerState.Idle);
@@ -429,10 +429,10 @@ public class Player_CATALYST : MonoBehaviour
 
         for (int i = 0; i < flaskStorage.Length; i++)
         {
-            if (flaskStorage[i] != DropletType_CATACLYST.None)
+            if (flaskStorage[i] != DropletType_CATALYST.None)
             {
-                DropletType_CATACLYST thisDrop = flaskStorage[i];
-                flaskStorage[i] = DropletType_CATACLYST.None;
+                DropletType_CATALYST thisDrop = flaskStorage[i];
+                flaskStorage[i] = DropletType_CATALYST.None;
                 Vector4 color = thisDrop.getColor();
                 emitParams.startColor = Util_CATACLYST.color32FromFloat4(color);
                 emitParams.velocity = new Vector2(Random.Range(-10, 10), Random.Range(-5, 10));
@@ -480,11 +480,11 @@ public class Player_CATALYST : MonoBehaviour
         Shader.SetGlobalVectorArray(flaskLayerColorId, flaskColors);
     }
 
-    public bool AddToFlask(DropletType_CATACLYST dropletType)
+    public bool AddToFlask(DropletType_CATALYST dropletType)
     {
         for (int i = 0; i < flaskStorage.Length; i++)
         {
-            if (flaskStorage[i] == DropletType_CATACLYST.None)
+            if (flaskStorage[i] == DropletType_CATALYST.None)
             {
                 flaskStorage[i] = dropletType;
                 UpdateFlaskSprite();
