@@ -236,7 +236,7 @@ public class Player_CATALYST : MonoBehaviour
         // Can't deposit if the flask is empty
         if (flaskStorage[0] == DropletType_CATALYST.None) return;
         // Raycast down from the center of the cat to check if we're below the cauldron
-        RaycastHit2D hit = Physics2D.Raycast(spriteRenderer.bounds.center, Vector2.down,
+        RaycastHit2D hit = Physics2D.Raycast(flask.GetComponent<SpriteRenderer>().bounds.center, Vector2.down,
             300, cauldronRaycastMask);
 
         //Debug.DrawRay(spriteRenderer.bounds.center, Vector2.down * 300, Color.red);

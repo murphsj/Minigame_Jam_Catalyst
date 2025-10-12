@@ -27,16 +27,12 @@ public class ScoreCounter_CATALYST : MonoBehaviour, MinigameSubscriber
         {
             if (scored < requiredDrops) return;
         }
-
-        Debug.Log("won");
         // All score requirements are met, we win
         MinigameManager.SetStateToSuccess();
     }
     
     public void AddDroplet(DropletType_CATALYST type)
     {
-        Debug.Log(dropletScores.Count);
-        Debug.Log((int)type-1);
         dropletScores[(int)type-1]++;
         scoreBoards[(int)type - 1].text = dropletScores[(int)type - 1].ToString() + "/" + requiredDrops;
         CheckVictory();
