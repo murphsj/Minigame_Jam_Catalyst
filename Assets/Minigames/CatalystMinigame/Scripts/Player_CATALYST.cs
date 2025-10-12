@@ -142,7 +142,6 @@ public class Player_CATALYST : MonoBehaviour
         }
         else if (playerState == PlayerState.Idle) //starts idle anim
         {
-            Debug.Log("IDLING");
             animator.SetBool("idling", true);
             animator.SetBool("jumping", false);
             animator.SetBool("walking", false);
@@ -276,13 +275,11 @@ public class Player_CATALYST : MonoBehaviour
 
         flaskStorage[totalSize] = DropletType.None;
 
-        var EmitParams = new ParticleSystem.EmitParams();
+        var emitParams = new ParticleSystem.EmitParams();
         Vector4 color = topColor.getColor();
-        EmitParams.startColor = Util_CATACLYST.color32FromFloat4(color);
+        emitParams.startColor = Util_CATACLYST.color32FromFloat4(color);
 
-        Debug.Log("EMITTING");
-
-        dropletParticleSys.Emit(1);
+        dropletParticleSys.Emit(emitParams, 1);
     }
 
     void EndDeposit()
@@ -291,7 +288,6 @@ public class Player_CATALYST : MonoBehaviour
         flask.SetActive(true);
         for (int i = 0; i < flaskStorage.Length; i++)
         {
-            dropletParticleSys.Emit(1);
             flaskStorage[i] = DropletType.None;
         }
         UpdateFlaskSprite();
@@ -418,9 +414,31 @@ public class Player_CATALYST : MonoBehaviour
             return;
 
         // Apply damage
-            currentHealth -= damage;
-        SetState(PlayerState.Damaged);
+        /*
+        currentHealth -= damage;
         Debug.Log($"Player took {damage} damage! Health: {currentHealth}/{maxHealth}");
+        */
+
+        SetState(PlayerState.Damaged);
+
+        var emitParams = new ParticleSystem.EmitParams();
+
+
+        for (int i = 0; i < flaskStorage.Length; i++)
+        {
+            if (flaskStorage[i] != DropletType.None)
+            {
+                DropletType thisDrop = flaskStorage[i];
+                flaskStorage[i] = DropletType.None;
+                Vector4 color = thisDrop.getColor();
+                emitParams.startColor = Util_CATACLYST.color32FromFloat4(color);
+                emitParams.velocity = new Vector2(Random.Range(-10, 10), Random.Range(-5, 10));
+
+                dropletParticleSys.Emit(emitParams, 1);
+            }
+        }
+
+        UpdateFlaskSprite();
 
         // Activate invincibility
         isInvincible = true;
