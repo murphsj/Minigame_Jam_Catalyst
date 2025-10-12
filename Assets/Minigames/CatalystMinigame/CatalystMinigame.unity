@@ -886,7 +886,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6.542592
+  orthographic size: 20.79187
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1329,6 +1329,11 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!223 &739805330 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 6777227549158263474, guid: d1abc5e54e8de4e5b868c18f0a6a1364, type: 3}
+  m_PrefabInstance: {fileID: 8603780958994699451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &739805332 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1088336198925271701, guid: d1abc5e54e8de4e5b868c18f0a6a1364, type: 3}
@@ -7729,6 +7734,7 @@ MonoBehaviour:
   healthHearts: []
   fullHeartColor: {r: 1, g: 0, b: 0, a: 1}
   emptyHeartColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  canvasObj: {fileID: 739805330}
 --- !u!1 &1564048139
 GameObject:
   m_ObjectHideFlags: 0
