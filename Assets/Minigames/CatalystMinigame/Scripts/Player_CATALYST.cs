@@ -41,6 +41,7 @@ public class Player_CATALYST : MonoBehaviour
     [Header("Actions")]
     public LayerMask cauldronRaycastMask;
     public GameObject flask;
+    public ScoreCounter_CATACLYST scoreCounter;
 
     // The numeric ID of the global shader property used to control the
     // visual contents of the flask
@@ -280,6 +281,8 @@ public class Player_CATALYST : MonoBehaviour
         emitParams.startColor = Util_CATACLYST.color32FromFloat4(color);
 
         dropletParticleSys.Emit(emitParams, 1);
+
+        scoreCounter.AddDroplet(topColor);
     }
 
     void EndDeposit()
