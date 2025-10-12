@@ -8,6 +8,7 @@ public class HealthDisplay_CATALYST : MonoBehaviour
     public Color fullHeartColor = Color.red;
     public Color emptyHeartColor = Color.gray;
     public Canvas canvasObj;
+    public Font drawFont;
     
     Player_CATALYST player;
     
@@ -65,7 +66,7 @@ public class HealthDisplay_CATALYST : MonoBehaviour
         textObj.transform.SetParent(canvasObj.transform, false);
         
         Text text = textObj.AddComponent<Text>();
-        text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        text.font = drawFont;
         text.fontSize = 20; // Much bigger
         text.color = Color.red; // Bright red color
         int currentHealth = player.GetCurrentHealth();

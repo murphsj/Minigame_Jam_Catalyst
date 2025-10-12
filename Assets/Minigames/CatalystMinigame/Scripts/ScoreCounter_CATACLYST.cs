@@ -8,7 +8,9 @@ public class ScoreCounter_CATALYST : MonoBehaviour, MinigameSubscriber
 {
     public List<TextMeshPro> scoreBoards;
     public int requiredDrops = 20;
+    public GameObject winNotif;
     List<int> dropletScores;
+    
 
     void Start()
     {
@@ -31,6 +33,7 @@ public class ScoreCounter_CATALYST : MonoBehaviour, MinigameSubscriber
         }
         // All score requirements are met, we win
         MinigameManager.SetStateToSuccess();
+        winNotif.SetActive(true);
     }
     
     public void AddDroplet(DropletType_CATALYST type)
