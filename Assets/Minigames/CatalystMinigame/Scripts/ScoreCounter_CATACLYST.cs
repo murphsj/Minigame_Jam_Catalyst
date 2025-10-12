@@ -31,7 +31,7 @@ public class ScoreCounter_CATACLYST : MonoBehaviour
         MinigameManager.SetStateToSuccess();
     }
     
-    public void AddDroplet(DropletType type)
+    public void AddDroplet(DropletType_CATACLYST type)
     {
         Debug.Log(dropletScores.Count);
         Debug.Log((int)type-1);

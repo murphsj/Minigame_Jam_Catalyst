@@ -30,7 +30,7 @@ public class DropletSpawningManager_CATALYST : MonoBehaviour
     void SpawnDroplet()
     {
         Vector2 position = new Vector2(UnityEngine.Random.Range(minSpawnX, maxSpawnX), spawnY);
-        DropletType dropletType = (DropletType)UnityEngine.Random.Range(1, 5);
+        DropletType_CATACLYST dropletType = (DropletType_CATACLYST)UnityEngine.Random.Range(1, 5);
 
         Droplet_CATACLYST spawnedDroplet = Instantiate(droplet, position, Quaternion.identity);
         spawnedDroplet.Initialize(dropletType, dropletMoveSpeed, dropletLifetime);

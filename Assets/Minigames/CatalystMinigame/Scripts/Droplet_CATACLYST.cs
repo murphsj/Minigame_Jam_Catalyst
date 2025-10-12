@@ -5,7 +5,7 @@ using UnityEngine.U2D;
 
 public class Droplet_CATACLYST : MonoBehaviour
 {
-    public DropletType dropletType;
+    public DropletType_CATACLYST dropletType;
     public SpriteAtlas dropletSpriteSheet;
 
     new BoxCollider2D collider;
@@ -23,7 +23,7 @@ public class Droplet_CATACLYST : MonoBehaviour
         animator.Play(dropletType.getStateName());
     }
 
-    public void Initialize(DropletType dropletType, float moveSpeed, float lifetime)
+    public void Initialize(DropletType_CATACLYST dropletType, float moveSpeed, float lifetime)
     {
         this.dropletType = dropletType;
         this.moveSpeed = moveSpeed;

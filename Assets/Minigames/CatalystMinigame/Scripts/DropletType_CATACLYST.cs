@@ -3,7 +3,7 @@ using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum DropletType
+public enum DropletType_CATACLYST
 {
     None = 0,
     Blue = 1,
@@ -14,24 +14,24 @@ public enum DropletType
 
 public static class Extensions
 {
-    public static string getStateName(this DropletType dropletType)
+    public static string getStateName(this DropletType_CATACLYST dropletType)
     {
         return "droplet_" + (((int)dropletType)-1);
     }
 
-    public static Vector4 getColor(this DropletType dropletType)
+    public static Vector4 getColor(this DropletType_CATACLYST dropletType)
     {
         switch (dropletType)
         {
-            case DropletType.None:
+            case DropletType_CATACLYST.None:
                 return new Vector4(0, 0, 0, 0);
-            case DropletType.Blue:
+            case DropletType_CATACLYST.Blue:
                 return new Vector4(0.3f, 0.6f, 0.8f, 1);
-            case DropletType.Green:
+            case DropletType_CATACLYST.Green:
                 return new Vector4(0.3f, 0.9f, 0.3f, 1);
-            case DropletType.Red:
+            case DropletType_CATACLYST.Red:
                 return new Vector4(0.9f, 0.1f, 0.1f, 1);
-            case DropletType.Cyan:
+            case DropletType_CATACLYST.Cyan:
                 return new Vector4(0.153f, 0.92f, 0.67f, 1); //six seven
             default:
                 return new Vector4(0, 0, 0, 0);
