@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ScoreCounter_CATALYST : MonoBehaviour
+public class ScoreCounter_CATALYST : MonoBehaviour, MinigameSubscriber
 {
     public List<TextMeshPro> scoreBoards;
     public int requiredDrops = 20;
@@ -40,5 +40,18 @@ public class ScoreCounter_CATALYST : MonoBehaviour
         dropletScores[(int)type-1]++;
         scoreBoards[(int)type - 1].text = dropletScores[(int)type - 1].ToString() + "/" + requiredDrops;
         CheckVictory();
+    }
+
+    public void OnMinigameStart()
+    {
+        // If the timer ends without the player reaching victory conditions,
+        // they have lost
+        MinigameManager.SetStateToFailure();
+    }
+
+    public void OnTimerEnd()
+    {
+        Debug.Log("hi");
+        MinigameManager.EndGame();
     }
 }
