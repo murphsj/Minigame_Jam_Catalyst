@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +13,15 @@ public class DropletSpawningManager_CATALYST : MonoBehaviour
     float maxSpawnX;
     float spawnY;
     float spawnTimer = 0;
+    List<DropletType_CATALYST> spawnBag;
+
+    void PopulateSpawnBag()
+    {
+        for (int i = 1; i < 5; i++)
+        {
+            spawnBag.Add((DropletType_CATALYST)i);
+        }
+    }
 
     void CalculateSpawnRange()
     {
@@ -24,13 +32,18 @@ public class DropletSpawningManager_CATALYST : MonoBehaviour
 
     void Start()
     {
+        spawnBag = new List<DropletType_CATALYST>(4);
         CalculateSpawnRange();
+        PopulateSpawnBag();
     }
 
     void SpawnDroplet()
     {
         Vector2 position = new Vector2(UnityEngine.Random.Range(minSpawnX, maxSpawnX), spawnY);
-        DropletType_CATALYST dropletType = (DropletType_CATALYST)UnityEngine.Random.Range(1, 5);
+        int index = Random.Range(0, spawnBag.Count-1);
+        DropletType_CATALYST dropletType = spawnBag[index];
+        spawnBag.RemoveAt(index);
+        if (spawnBag.Count == 0) PopulateSpawnBag();
 
         Droplet_CATACLYST spawnedDroplet = Instantiate(droplet, position, Quaternion.identity);
         spawnedDroplet.Initialize(dropletType, dropletMoveSpeed, dropletLifetime);
