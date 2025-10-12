@@ -113,7 +113,7 @@ public class Player_CATALYST : MonoBehaviour
     {
         //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
         // Handle double jump with forward force (leap)
-        if (CanPlayerAct() && isHoldingDoubleJump)
+        if (CanPlayerAct() && playerState == PlayerState.Jump)
         {
             // Only add forward force if player is actually moving (left or right)
             if (moveDirection.x != 0)
