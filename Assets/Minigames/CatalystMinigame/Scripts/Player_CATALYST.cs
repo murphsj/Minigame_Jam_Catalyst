@@ -1,9 +1,5 @@
-using System;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// Handles movement and input handling for the player.
@@ -78,6 +74,7 @@ public class Player_CATALYST : MonoBehaviour
     private float invincibilityTimer;
     private float knockbackTimer;
     private SpriteRenderer spriteRenderer;
+    private ParticleSystem dropletParticleSys;
     
 
     PlayerState playerState;
@@ -93,6 +90,7 @@ public class Player_CATALYST : MonoBehaviour
         controller = GetComponent<MovementController_CATALYST>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        dropletParticleSys = GetComponent<ParticleSystem>();
 
         // Store original scale to preserve it during flipping
         originalScale = transform.localScale;
@@ -112,7 +110,7 @@ public class Player_CATALYST : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
+        //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
         // Handle double jump with forward force (leap)
         if (CanPlayerAct() && isHoldingDoubleJump)
         {
@@ -144,6 +142,7 @@ public class Player_CATALYST : MonoBehaviour
         }
         else if (playerState == PlayerState.Idle) //starts idle anim
         {
+            Debug.Log("IDLING");
             animator.SetBool("idling", true);
             animator.SetBool("jumping", false);
             animator.SetBool("walking", false);
@@ -226,7 +225,7 @@ public class Player_CATALYST : MonoBehaviour
         {
             flipped = moveDirection.x > 0;
         }
-        if (CanPlayerAct() && moveDirection.y < 0)
+        if (controller.collisions.below && CanPlayerAct() && moveDirection.y < 0)
         {
             TryDeposit();
         }
@@ -248,15 +247,51 @@ public class Player_CATALYST : MonoBehaviour
             velocity.x = 0;
             SetState(PlayerState.Deposit);
             flask.SetActive(false);
+            InvokeRepeating("ScoreDroplet", 0.05f, 0.05f);
             Invoke("EndDeposit", 0.5f);
         }
     }
 
+    /// <summary>
+    /// Removes the topmost droplet from the beaker and scores it
+    /// </summary>
+    void ScoreDroplet()
+    {
+        DropletType topColor = DropletType.None;
+        int totalSize = -1;
+        for (int i = 0; i < flaskStorage.Length; i++)
+        {
+            if (flaskStorage[i] != DropletType.None)
+            {
+                topColor = flaskStorage[i];
+                totalSize++;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        if (topColor == DropletType.None) return;
+
+        flaskStorage[totalSize] = DropletType.None;
+
+        var EmitParams = new ParticleSystem.EmitParams();
+        Vector4 color = topColor.getColor();
+        EmitParams.startColor = Util_CATACLYST.color32FromFloat4(color);
+
+        Debug.Log("EMITTING");
+
+        dropletParticleSys.Emit(1);
+    }
+
     void EndDeposit()
     {
+        CancelInvoke("ScoreDroplet");
         flask.SetActive(true);
         for (int i = 0; i < flaskStorage.Length; i++)
         {
+            dropletParticleSys.Emit(1);
             flaskStorage[i] = DropletType.None;
         }
         UpdateFlaskSprite();
@@ -322,7 +357,6 @@ public class Player_CATALYST : MonoBehaviour
         // Handle invincibility timer
         if (isInvincible)
         {
-            Debug.Log(invincibilityTimer);
             invincibilityTimer -= Time.fixedDeltaTime;
             
             // Flash effect during invincibility
