@@ -436,6 +436,7 @@ public class Player_CATALYST : MonoBehaviour
                 Vector4 color = thisDrop.getColor();
                 emitParams.startColor = Util_CATACLYST.color32FromFloat4(color);
                 emitParams.velocity = new Vector2(Random.Range(-10, 10), Random.Range(-5, 10));
+                emitParams.startLifetime = 0.5f;
 
                 dropletParticleSys.Emit(emitParams, 1);
             }
