@@ -26,9 +26,9 @@ public static class Extensions
             case DropletType_CATALYST.None:
                 return new Vector4(0, 0, 0, 0);
             case DropletType_CATALYST.Blue:
-                return new Vector4(0.3f, 0.6f, 0.8f, 1);
+                return new Vector4(0.4f, 0.3f, 0.9f, 1);
             case DropletType_CATALYST.Green:
-                return new Vector4(0.3f, 0.9f, 0.3f, 1);
+                return new Vector4(0.18f, 0.35f, 0.12f, 1);
             case DropletType_CATALYST.Red:
                 return new Vector4(0.9f, 0.1f, 0.1f, 1);
             case DropletType_CATALYST.Cyan:

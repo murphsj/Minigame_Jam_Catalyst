@@ -17,7 +17,7 @@ public class Enemy_CATALYST : MonoBehaviour
     public void Initialize(bool movingRight)
     {
         this.movingRight = movingRight;
-        GetComponent<SpriteRenderer>().flipX = movingRight;
+        GetComponent<SpriteRenderer>().flipX = !movingRight;
     }
     
     void Update()
